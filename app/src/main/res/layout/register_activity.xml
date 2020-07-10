@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_polos_fix"
+    tools:context=".RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="25dp"
+        android:background="@color/TransWhite">
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Transparant"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/profiling"
+                android:textColor="#fff"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/linearLayout1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-10dp"
+            android:rotation="45" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp">
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/icon1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#6fa8dc"
+                    android:src="@drawable/nama_01" />
+
+                <EditText
+                    android:id="@+id/editNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/icon1"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/icon1"
+                    android:background="@color/WhiteSmoke"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext"
+                    android:paddingStart="10dp" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editNama"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/icon2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="#6fa8dc"
+                        android:src="@drawable/email_01"/>
+
+                    <EditText
+                        android:id="@+id/editEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/icon2"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="-1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_toRightOf="@id/icon2"
+                        android:background="@color/WhiteSmoke"
+                        android:hint="@string/email"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingStart="10dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/editEmail"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/icon3"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="#6fa8dc"
+                            android:src="@drawable/jabatan_01"/>
+
+                        <EditText
+                            android:id="@+id/editJabatan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/icon3"
+                            android:layout_alignParentTop="true"
+                            android:layout_toRightOf="@id/icon3"
+                            android:background="@color/WhiteSmoke"
+                            android:hint="@string/jabatan"
+                            android:imeOptions="actionNext"
+                            android:inputType="textLongMessage"
+                            android:maxLines="2"
+                            android:paddingStart="10dp" />
+
+                        <RelativeLayout
+                            android:id="@+id/relativeLayout5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/editJabatan"
+                            android:layout_marginTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/icon4"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="#6fa8dc"
+                                android:src="@drawable/telepon_01"/>
+
+                            <EditText
+                                android:id="@+id/editNotlpn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@+id/icon4"
+                                android:layout_alignParentTop="true"
+                                android:layout_toRightOf="@id/icon4"
+                                android:background="@color/WhiteSmoke"
+                                android:hint="@string/telpon"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:paddingStart="10dp" />
+
+                                <RelativeLayout
+                                    android:id="@+id/relativeLayout6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/editNotlpn"
+                                    android:layout_marginTop="20dp">
+
+                                    <ImageView
+                                        android:id="@+id/icon6"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="#6fa8dc"
+                                        android:src="@drawable/nomor_pegawai_01"/>
+
+                                    <EditText
+                                        android:id="@+id/editId"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignBottom="@+id/icon6"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_toRightOf="@id/icon6"
+                                        android:background="@color/WhiteSmoke"
+                                        android:hint="@string/pegawai"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="number"
+                                        android:paddingStart="10dp" />
+
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_regis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btnSimpan"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="@string/simpan"
+            android:textColor="#000"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Scheduling_Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="scheduling_activity">Scheduling Activity</string>
+    <string name="user_name">user.name@gmail.com</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_alarm">Penjadwalan dan Alarm</string>
+    <string name="menu_detail">Input Detail Kegiatan</string>
+    <string name="menu_spk">Sistem Pendukung Keputusan</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="profiling">Data Pengguna</string>
+    <string name="name">  Name</string>
+    <string name="email">  Email</string>
+    <string name="jabatan">  Jabatan</string>
+    <string name="telpon">  No. Telpon</string>
+    <string name="password">  Password</string>
+    <string name="pegawai"> No.Pegawai</string>
+    <string name="simpan">Simpan</string>
+    <string name="ubah">Ubah</string>
+
+    <string name="teks">Aplikasi ini akan membantu anda dalam menyusun dan merekomendasikan agenda prioritas menggunakan algoritma TOPSIS </string>
+    <string name="schedulling">Schedulling Activity</string>
+</resources>

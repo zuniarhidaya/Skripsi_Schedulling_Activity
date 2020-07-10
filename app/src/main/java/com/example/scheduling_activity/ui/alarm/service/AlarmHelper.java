@@ -1,0 +1,32 @@
+package com.example.scheduling_activity.ui.alarm.service;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+public class AlarmHelper {
+
+
+    public static void setAlarm(Context context, Long time, String name) {
+
+
+        // name = nama agenda
+        Intent i = new Intent(context, AlarmReceiver.class).putExtra("name", name);
+
+        //buat pending intent (intent yang ter pending ketika alarm muncul)
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (System.currentTimeMillis() < time) {
+            //buat alarm
+            //RTC Wakeup, tipe waktu di itung ketika device mati
+            assert alarmManager != null;
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        }
+
+
+    }
+
+
+}
