@@ -1,10 +1,18 @@
 package com.example.scheduling_activity.ui.detail;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.ui.alarm.service.AlarmHelper;
+import com.example.scheduling_activity.ui.alarm.service.BootCompleteReceiver;
 import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
@@ -33,6 +42,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.TimeZone;
 
 public class DetailKegiatan extends AppCompatActivity {
 
@@ -54,6 +65,7 @@ public class DetailKegiatan extends AppCompatActivity {
     private String absensi;
     private String tanggal;
     private String waktu;
+    private String waktuAkhir;
 
     private CheckBox checkBox;
 
@@ -62,6 +74,13 @@ public class DetailKegiatan extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_kegiatan);
+
+        ComponentName componentName = new ComponentName(getApplicationContext(), BootCompleteReceiver.class);
+        getApplicationContext().getPackageManager().setComponentEnabledSetting(
+                componentName,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+        );
 
         editNama = (EditText) findViewById(R.id.editNama);
         editCalendar = (EditText) findViewById(R.id.editCalendar);
@@ -74,6 +93,7 @@ public class DetailKegiatan extends AppCompatActivity {
         spinnerAbsensi = (Spinner) findViewById(R.id.spinnerAbsensi);
         button1 = (Button) findViewById(R.id.btnSimpan);
         checkBox = (CheckBox) findViewById(R.id.cb_set_reminder);
+
 
         Agenda();
         Jabatan();
@@ -128,6 +148,14 @@ public class DetailKegiatan extends AppCompatActivity {
                             agen.setStatus(status);
                             agen.setAbsensi(absensi);
 
+                            if (checkBox.isChecked()) {
+                                setEvent();
+                                agen.setReminder(true);
+                            } else {
+                                agen.setTime(0L);
+                                agen.setReminder(false);
+                            }
+
                             db.agendaDao().insertAgenda(agen);
 
                             for (int i = 0; i < list.size(); i++) {
@@ -136,40 +164,6 @@ public class DetailKegiatan extends AppCompatActivity {
                         }
                     });
 
-
-                    if (checkBox.isChecked()) {
-
-                        String[] date = tanggal.split("-");
-                        String[] time = waktu.split(":");
-
-                        int year = Integer.parseInt(date[0]);
-                        int month = Integer.parseInt(date[1]);
-                        int day = Integer.parseInt(date[2]);
-
-                        int hour = Integer.parseInt(time[0]);
-                        int minute = Integer.parseInt(time[1]);
-
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, day);
-                        calendar.set(Calendar.HOUR_OF_DAY, hour);
-                        calendar.set(Calendar.MINUTE, minute);
-                        calendar.set(Calendar.SECOND, 0);
-
-                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
-                        String dateFormatted = format.format(calendar.getTimeInMillis());
-
-                        try {
-                            Date milDate = format.parse(dateFormatted);
-                            assert milDate != null;
-                            Long timeInMillis = milDate.getTime();
-                            AlarmHelper.setAlarm(DetailKegiatan.this, timeInMillis, agenda);
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
                     Intent intent;
                     intent = new Intent(DetailKegiatan.this, MainActivity.class);
@@ -182,6 +176,97 @@ public class DetailKegiatan extends AppCompatActivity {
         });
     }
 
+
+    private Long setReminder(String timeInFormatted) {
+
+        String[] date = tanggal.split("-");
+        String[] time = timeInFormatted.split(":");
+
+        int year = Integer.parseInt(date[0]);
+        int month = Integer.parseInt(date[1]);
+        int day = Integer.parseInt(date[2]);
+
+        int hour = Integer.parseInt(time[0]);
+        int minute = Integer.parseInt(time[1]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        String dateFormatted = format.format(calendar.getTimeInMillis());
+
+        try {
+            Date milDate = format.parse(dateFormatted);
+            assert milDate != null;
+            //AlarmHelper.setAlarm(DetailKegiatan.this, timeInMillis, agenda);
+            return milDate.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
+
+    private void setEvent(){
+        // get calendar
+
+        Long startTime = setReminder(waktu);
+        Long endTime = setReminder(waktuAkhir);
+
+        Calendar cal = Calendar.getInstance();
+        Uri EVENTS_URI = Uri.parse("content://com.android.calendar/" + "events");
+        ContentResolver cr = getContentResolver();
+
+// event insert
+        ContentValues values = new ContentValues();
+        values.put("calendar_id", 1);
+        values.put("title", agenda);
+        values.put("allDay", 0);
+        values.put(CalendarContract.Events.DTSTART, startTime); // event starts at 11 minutes from now
+        values.put(CalendarContract.Events.DTEND, endTime); // ends 60 minutes from now
+        values.put("description", agenda);
+        values.put("hasAlarm", 1);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        Uri event = cr.insert(EVENTS_URI, values);
+
+// reminder insert
+        Uri REMINDERS_URI = Uri.parse("content://com.android.calendar/reminders");
+        values = new ContentValues();
+        assert event != null;
+        values.put( "event_id", Long.parseLong(Objects.requireNonNull(event.getLastPathSegment())));
+        values.put( "method", 1 );
+        values.put( "minutes", 10 );
+        cr.insert( REMINDERS_URI, values );
+    }
+
+    private String getCalendarUriBase(Activity act) {
+
+        String calendarUriBase = null;
+        Uri calendars = Uri.parse("content://calendar/calendars");
+        Cursor managedCursor = null;
+        try {
+            managedCursor = act.managedQuery(calendars, null, null, null, null);
+        } catch (Exception e) {
+        }
+        if (managedCursor != null) {
+            calendarUriBase = "content://calendar/";
+        } else {
+            calendars = Uri.parse("content://com.android.calendar/calendars");
+            try {
+                managedCursor = act.managedQuery(calendars, null, null, null, null);
+            } catch (Exception e) {
+            }
+            if (managedCursor != null) {
+                calendarUriBase = "content://com.android.calendar/";
+            }
+        }
+        return calendarUriBase;
+    }
+
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
@@ -191,7 +276,7 @@ public class DetailKegiatan extends AppCompatActivity {
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
+
     }
 
 
@@ -332,7 +417,7 @@ public class DetailKegiatan extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
             waktu = hourOfDay + ":" + minute;
             editMulai.setText(waktu);
-        }, jam, menit, false);
+        }, jam, menit, true);
 
         timePickerDialog.show();
     }
@@ -343,9 +428,9 @@ public class DetailKegiatan extends AppCompatActivity {
         final int menit = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
-            waktu = hourOfDay + ":" + minute;
-            editSelesai.setText(waktu);
-        }, jam, menit, false);
+            waktuAkhir = hourOfDay + ":" + minute;
+            editSelesai.setText(waktuAkhir);
+        }, jam, menit, true);
 
         timePickerDialog.show();
     }

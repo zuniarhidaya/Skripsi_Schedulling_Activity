@@ -26,6 +26,9 @@ public class SessionManager {
     public static final String KEY_JABATAN = "jabatan";
     public static final String KEY_TELPON = "telpon";
     public static final String KEY_NIP = "nip";
+    public static final String KEY_IS_CRITERIA = "criteria";
+
+
 
     public static final String IS_LABEL = "IsLabelling";
 
@@ -120,6 +123,13 @@ public class SessionManager {
     public String getNip(){ return pref.getString(KEY_NIP, ""); }
     public void setNip(String nip) {
         editor.putString(KEY_NIP, "");
+        editor.commit();
+    }
+
+
+    public boolean getStatusCriteria(){ return pref.getBoolean(KEY_IS_CRITERIA, false); }
+    public void setDoneCriteria(boolean criteria) {
+        editor.putBoolean(KEY_IS_CRITERIA, criteria);
         editor.commit();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.scheduling_activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,13 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.scheduling_activity.ui.detail.DetailKegiatan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +57,22 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         onBackPressed();
+
+        Dexter.withContext(this)
+                .withPermissions(
+                        Manifest.permission.WRITE_CALENDAR,
+                        Manifest.permission.READ_CALENDAR
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+            }
+        }).check();
     }
 
     @Override
@@ -66,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
     }
 }

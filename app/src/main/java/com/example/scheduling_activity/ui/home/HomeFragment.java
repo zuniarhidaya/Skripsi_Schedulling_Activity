@@ -1,10 +1,12 @@
 package com.example.scheduling_activity.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,16 +66,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MCalendarView calendarView = ((MCalendarView) view.findViewById(R.id.calendar));
+        CalendarView calendarView = ((CalendarView) view.findViewById(R.id.calendar));
         bulan = (TextView) view.findViewById(R.id.bulan);
 
-
+       /* Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", cal.getTimeInMillis());
+        intent.putExtra("allDay", false);
+        intent.putExtra("rrule", "FREQ=DAILY");
+        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+        intent.putExtra("title", "A Test Event from android app");
+        startActivity(intent);*/
 
         int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
-
         String nameMonth = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, new Locale("in", "ID"));
-
-        bulan.setText(nameMonth);
+        //bulan.setText(nameMonth);
 
 //        AppExecutors.getInstance().diskIO().execute(new Runnable() {
 //            @Override

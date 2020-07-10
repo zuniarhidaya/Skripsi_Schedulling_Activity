@@ -36,7 +36,7 @@ public class MeetingActivityLabels extends AppCompatActivity {
     private int counter = 0;
     private Button button1;
     private Button button2;
-    private boolean arr[]  = new boolean[]{false, false, false};
+    private boolean arr[] = new boolean[]{false, false, false};
     private List<String> criteria = new ArrayList<>();
 
     SessionManager sessionManager;
@@ -46,8 +46,8 @@ public class MeetingActivityLabels extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.labels_meeting);
 
-        sessionManager = new SessionManager(getApplicationContext());
-        if(sessionManager.isLabelling()) {
+        sessionManager = new SessionManager(MeetingActivityLabels.this);
+        if (sessionManager.getStatusCriteria()) {
             Intent i = new Intent(MeetingActivityLabels.this, MainActivity.class);
             startActivity(i);
         }
@@ -66,12 +66,12 @@ public class MeetingActivityLabels extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
 
-        relativeOne.setOnClickListener(new View.OnClickListener(){
+        relativeOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!arr[0]){
+                if (!arr[0]) {
 
                     criteria.add(rapatDireksi.getText().toString());
                     counter++;
@@ -81,11 +81,11 @@ public class MeetingActivityLabels extends AppCompatActivity {
             }
         });
 
-        relativeTwo.setOnClickListener(new View.OnClickListener(){
+        relativeTwo.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(!arr[1]){
+                if (!arr[1]) {
 
                     criteria.add(rapatDivisi.getText().toString());
                     counter++;
@@ -95,11 +95,11 @@ public class MeetingActivityLabels extends AppCompatActivity {
             }
         });
 
-        relativeThree.setOnClickListener(new View.OnClickListener(){
+        relativeThree.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(!arr[2]){
+                if (!arr[2]) {
 
                     criteria.add(rapatSaham.getText().toString());
                     counter++;
@@ -109,7 +109,7 @@ public class MeetingActivityLabels extends AppCompatActivity {
             }
         });
 
-        button1.setOnClickListener(new View.OnClickListener(){
+        button1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -128,7 +128,7 @@ public class MeetingActivityLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(arr[0] && arr[1] && arr[2]) {
+                if (arr[0] && arr[1] && arr[2]) {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -150,7 +150,7 @@ public class MeetingActivityLabels extends AppCompatActivity {
                     intent = new Intent(MeetingActivityLabels.this, JabatanActivityLabels.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(),"Harap Lengkapi Data Anda!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
             }

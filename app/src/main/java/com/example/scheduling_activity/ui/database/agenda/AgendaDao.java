@@ -12,6 +12,8 @@ import java.util.List;
 public interface AgendaDao {
     @Query("Select * from agenda")
     List<AgendaTable> getAgendaList();
+    @Query("Select * from agenda where reminder = 1")
+    List<AgendaTable> getAgendaReminder();
     @Insert
     void insertAgenda(AgendaTable agenda);
     @Update

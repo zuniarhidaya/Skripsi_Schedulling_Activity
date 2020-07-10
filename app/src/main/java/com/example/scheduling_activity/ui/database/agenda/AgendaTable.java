@@ -28,6 +28,18 @@ public class AgendaTable {
     private int awal = 0;
     @ColumnInfo(name = "akhir")
     private int akhir = 0;
+    @ColumnInfo(name = "reminder")
+    private boolean isReminder = false;
+    @ColumnInfo(name = "time")
+    private Long time = 0L;
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
 
     public int getAwal() {
         return awal;
@@ -61,7 +73,7 @@ public class AgendaTable {
         this.tanggal = tanggal;
     }
 
-    public AgendaTable(){
+    public AgendaTable() {
 
     }
 
@@ -121,4 +133,11 @@ public class AgendaTable {
         this.absensi = absensi;
     }
 
+    public boolean isReminder() {
+        return isReminder;
+    }
+
+    public void setReminder(boolean reminder) {
+        isReminder = reminder;
+    }
 }
