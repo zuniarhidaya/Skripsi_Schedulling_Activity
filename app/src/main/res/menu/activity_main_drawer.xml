@@ -13,12 +13,8 @@
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/menu_profile" />
         <item
-            android:id="@+id/nav_alarm"
-            android:icon="@drawable/ic_access_alarms_black_24dp"
-            android:title="@string/menu_alarm" />
-        <item
             android:id="@+id/nav_dss"
-            android:icon="@drawable/ic_priority_high_black_24dp"
+            android:icon="@drawable/ic_access_alarms_black_24dp"
             android:title="@string/menu_spk" />
     </group>
 </menu>

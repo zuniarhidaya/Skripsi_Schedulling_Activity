@@ -22,16 +22,15 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_alarm"
-        android:name="com.example.scheduling_activity.ui.alarm.AlarmFragment"
-        android:label="Alarm"
-        tools:layout="@layout/fragment_alarm" />
-
+<!--    <fragment-->
+<!--        android:id="@+id/nav_alarm"-->
+<!--        android:name="com.example.scheduling_activity.ui.alarm.AlarmFragment"-->
+<!--        android:label="Alarm"-->
+<!--        tools:layout="@layout/fragment_alarm" />-->
 
     <fragment
         android:id="@+id/nav_dss"
         android:name="com.example.scheduling_activity.ui.dss.DssFragment"
-        android:label="DSS"
+        android:label="TOPSIS Algorithm"
         tools:layout="@layout/fragment_dss" />
 </navigation>
