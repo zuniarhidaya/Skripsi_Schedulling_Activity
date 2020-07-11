@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.scheduling_activity.ui.labels.MeetingActivityLabels;
-
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText editText1;
@@ -30,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         final SessionManager session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            Intent intent = new Intent(RegisterActivity.this, MeetingActivityLabels.class);
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
         }
 
@@ -53,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!nama.isEmpty() && !email.isEmpty() && !jabatan.isEmpty() && !telpon.isEmpty() && !nip.isEmpty()) {
 
                     session.createLoginSession(nama, email, jabatan, telpon, nip);
-                    Intent intent = new Intent(RegisterActivity.this, MeetingActivityLabels.class);
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();

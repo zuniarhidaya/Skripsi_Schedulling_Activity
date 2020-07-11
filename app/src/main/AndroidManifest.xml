@@ -26,17 +26,14 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.labels.MeetingActivityLabels" />
-        <activity android:name=".ui.labels.JabatanActivityLabels" />
-        <activity android:name=".ui.labels.StatusActivityLabels" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".ui.detail.DetailKegiatan" />
 
         <receiver android:name=".ui.alarm.service.AlarmReceiver"/>

@@ -16,7 +16,7 @@ public class Bobot {
 
 
 
-    public static String[] meeting = new String[]{"Rapat Divisi", "Rapat Direksi", "Rapat Pemegang Saham"};
+    public static String[] meeting = new String[]{"Rapat Pemegang Saham", "Rapat Direksi", "Rapat Divisi"};
     public static String[] jabatan = new String[]{"Direktur", "Manajer", "Supervisor/PIC"};
     public static String[] status = new String[]{"Online", "Offline"};
     public static String[] jarak = new String[]{"0-5 km", "6-10 km", "11-20 km", ">20 km"};
