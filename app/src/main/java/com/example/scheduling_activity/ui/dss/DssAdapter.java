@@ -1,4 +1,4 @@
-package com.example.scheduling_activity.ui.home;
+package com.example.scheduling_activity.ui.dss;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,12 +14,12 @@ import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+public class DssAdapter extends RecyclerView.Adapter<DssAdapter.ViewHolder> {
 
-    private List<AgendaTable> mData;
+    private List<Result> mData;
     private LayoutInflater mInflater;
 
-    public HomeAdapter(Context context, List<AgendaTable> data){
+    public DssAdapter(Context context, List<Result> data){
         this.mInflater = LayoutInflater.from(context);
         this.mData =  data;
     }
@@ -27,7 +27,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_agenda, parent, false);
+        View view = mInflater.inflate(R.layout.item_dss, parent, false);
         return new ViewHolder(view);
     }
 
@@ -43,26 +43,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textName;
-        private TextView textJenis;
-        private TextView textStatus;
-        private TextView textJarak;
-        private TextView textJabatan;
+        private TextView textScore;
 
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
            textName = itemView.findViewById(R.id.textName);
-           textJenis = itemView.findViewById(R.id.textJenis);
-           textJarak = itemView.findViewById(R.id.textJarak);
-           textJabatan = itemView.findViewById(R.id.textJabatan);
-           textStatus = itemView.findViewById(R.id.textStatus);
+           textScore = itemView.findViewById(R.id.textScore);
        }
 
-       public void binding(AgendaTable agenda){
-           textName.setText(agenda.getName());
-           textJenis.setText(agenda.getMeeting());
-           textJarak.setText(agenda.getJarak());
-           textJabatan.setText(agenda.getJabatan());
-           textStatus.setText(agenda.getStatus());
+       public void binding(Result result){
+           textName.setText(result.getName());
+           textScore.setText(result.getScore());
 
 
        }

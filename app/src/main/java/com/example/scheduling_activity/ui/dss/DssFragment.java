@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scheduling_activity.Bobot;
 import com.example.scheduling_activity.HasilKonversi;
@@ -43,6 +46,7 @@ public class DssFragment extends Fragment {
     private TextView ans2;
     private TextView ans3;
     private TextView ans4;
+    private RecyclerView recyclerView;
     private List<CriteriaTable> label = new ArrayList<>();
     private List<AgendaTable> agendas = new ArrayList<>();
     private List<HasilKonversi> hasils = new ArrayList<>();
@@ -70,6 +74,7 @@ public class DssFragment extends Fragment {
         ans2 = (TextView) view.findViewById(R.id.ans_2);
         ans3 = (TextView) view.findViewById(R.id.ans_3);
         ans4 = (TextView) view.findViewById(R.id.ans_4);
+        recyclerView = view.findViewById(R.id.rv_hasil);
         masukTanggal = (EditText) view.findViewById(R.id.masukTanggal);
         masukTanggal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,10 +183,26 @@ public class DssFragment extends Fragment {
     }
 
     private void printDetailedResults(Topsis topsis) {
+
+
+        ArrayList<Result> results = new ArrayList<>();
+
         for (Alternative alternative : topsis.getAlternatives()) {
-            ans3.setText("" + alternative.getName());
-            ans4.setText("" + alternative.getCalculatedPerformanceScore());
+
+            Result result = new Result();
+            result.setName(alternative.getName());
+            result.setScore(alternative.getCalculatedPerformanceScore()+"");
+            results.add(result);
+
+            /*ans3.setText("" + alternative.getName());
+            ans4.setText("" + alternative.getCalculatedPerformanceScore());*/
         }
+
+        DssAdapter dssAdapter = new DssAdapter(getContext(), results);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(dssAdapter);
+
     }
 
     public void onBackPressed() {
