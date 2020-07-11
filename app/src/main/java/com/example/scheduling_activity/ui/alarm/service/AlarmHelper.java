@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 public class AlarmHelper {
 
@@ -22,7 +23,13 @@ public class AlarmHelper {
             //buat alarm
             //RTC Wakeup, tipe waktu di itung ketika device mati
             assert alarmManager != null;
-            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+            }else{
+                alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+            }
+
         }
 
 

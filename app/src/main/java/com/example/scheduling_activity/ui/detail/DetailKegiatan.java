@@ -1,6 +1,6 @@
 package com.example.scheduling_activity.ui.detail;
 
-import android.app.Activity;
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
@@ -8,7 +8,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +25,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.example.scheduling_activity.Bobot;
 import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.ui.alarm.service.AlarmHelper;
@@ -140,6 +141,7 @@ public class DetailKegiatan extends AppCompatActivity {
                             DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
                             AgendaTable agen = new AgendaTable();
                             List<AgendaTable> list = db.agendaDao().getAgendaList();
+
                             agen.setJabatan(jabatan);
                             agen.setName(editNama.getText().toString());
                             agen.setTanggal(editCalendar.getText().toString());
@@ -164,6 +166,11 @@ public class DetailKegiatan extends AppCompatActivity {
                         }
                     });
 
+
+                    /*if (checkBox.isChecked()) {
+                        setEvent();
+                    }
+*/
 
                     Intent intent;
                     intent = new Intent(DetailKegiatan.this, MainActivity.class);
@@ -203,69 +210,61 @@ public class DetailKegiatan extends AppCompatActivity {
         try {
             Date milDate = format.parse(dateFormatted);
             assert milDate != null;
-            //AlarmHelper.setAlarm(DetailKegiatan.this, timeInMillis, agenda);
-            return milDate.getTime();
+            Long timeInMillis = milDate.getTime();
+            AlarmHelper.setAlarm(DetailKegiatan.this, timeInMillis, agenda);
+            return timeInMillis;
         } catch (ParseException e) {
             e.printStackTrace();
             return 0L;
         }
     }
 
-    private void setEvent(){
+    private void setEvent() {
         // get calendar
-
+/*
         Long startTime = setReminder(waktu);
         Long endTime = setReminder(waktuAkhir);
 
-        Calendar cal = Calendar.getInstance();
-        Uri EVENTS_URI = Uri.parse("content://com.android.calendar/" + "events");
         ContentResolver cr = getContentResolver();
 
 // event insert
         ContentValues values = new ContentValues();
-        values.put("calendar_id", 1);
-        values.put("title", agenda);
-        values.put("allDay", 0);
-        values.put(CalendarContract.Events.DTSTART, startTime); // event starts at 11 minutes from now
-        values.put(CalendarContract.Events.DTEND, endTime); // ends 60 minutes from now
-        values.put("description", agenda);
-        values.put("hasAlarm", 1);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
-        Uri event = cr.insert(EVENTS_URI, values);
+        values.put(CalendarContract.Events.DTSTART, startTime);
+        values.put(CalendarContract.Events.DTEND, endTime);
+        values.put(CalendarContract.Events.TITLE, agenda);
+        values.put(CalendarContract.Events.DESCRIPTION, agenda);
+        values.put(CalendarContract.Events.CALENDAR_ID, System.currentTimeMillis() / 10);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+        values.put(CalendarContract.Events.EVENT_LOCATION, jabatan);
+        values.put(CalendarContract.Events.GUESTS_CAN_INVITE_OTHERS, "1");
+        values.put(CalendarContract.Events.GUESTS_CAN_SEE_GUESTS, "1");
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Uri event = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
 // reminder insert
-        Uri REMINDERS_URI = Uri.parse("content://com.android.calendar/reminders");
-        values = new ContentValues();
+        ContentValues reminder = new ContentValues();
         assert event != null;
-        values.put( "event_id", Long.parseLong(Objects.requireNonNull(event.getLastPathSegment())));
-        values.put( "method", 1 );
-        values.put( "minutes", 10 );
-        cr.insert( REMINDERS_URI, values );
+        reminder.put("event_id", Long.parseLong(Objects.requireNonNull(event.getLastPathSegment())));
+        reminder.put("method", 1);
+        reminder.put("minutes", 10);
+        cr.insert(CalendarContract.Reminders.CONTENT_URI, reminder);*/
+
+        Long startTime = setReminder(waktu);
+        Long endTime = setReminder(waktuAkhir);
+
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", startTime);
+        intent.putExtra("allDay", false);
+        //intent.putExtra("rrule", "FREQ=DAILY");
+        intent.putExtra("endTime", endTime);
+        intent.putExtra("title", editNama.getText().toString());
+        startActivity(intent);
     }
 
-    private String getCalendarUriBase(Activity act) {
-
-        String calendarUriBase = null;
-        Uri calendars = Uri.parse("content://calendar/calendars");
-        Cursor managedCursor = null;
-        try {
-            managedCursor = act.managedQuery(calendars, null, null, null, null);
-        } catch (Exception e) {
-        }
-        if (managedCursor != null) {
-            calendarUriBase = "content://calendar/";
-        } else {
-            calendars = Uri.parse("content://com.android.calendar/calendars");
-            try {
-                managedCursor = act.managedQuery(calendars, null, null, null, null);
-            } catch (Exception e) {
-            }
-            if (managedCursor != null) {
-                calendarUriBase = "content://com.android.calendar/";
-            }
-        }
-        return calendarUriBase;
-    }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
@@ -281,17 +280,13 @@ public class DetailKegiatan extends AppCompatActivity {
 
 
     private void Agenda() {
-        final List<String> categoriesAgenda = new ArrayList<>();
-        categoriesAgenda.add("Rapat Divisi");
-        categoriesAgenda.add("Rapat Direksi");
-        categoriesAgenda.add("Rapat Pemegang Saham");
-        ArrayAdapter<String> dataAdapterAgenda = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoriesAgenda);
+        ArrayAdapter<String> dataAdapterAgenda = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Bobot.meeting);
         dataAdapterAgenda.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAgenda.setAdapter(dataAdapterAgenda);
         spinnerAgenda.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                agenda = categoriesAgenda.get(position);
+                agenda = Bobot.meeting[position];
             }
 
             @Override
@@ -302,17 +297,13 @@ public class DetailKegiatan extends AppCompatActivity {
     }
 
     private void Jabatan() {
-        final List<String> categoriesJabatan = new ArrayList<>();
-        categoriesJabatan.add("Direktur");
-        categoriesJabatan.add("Manajer");
-        categoriesJabatan.add("Supervisor/PIC");
-        ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoriesJabatan);
+        ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Bobot.jabatan);
         dataAdapterJabatan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJabatan.setAdapter(dataAdapterJabatan);
         spinnerJabatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                jabatan = categoriesJabatan.get(position);
+                jabatan = Bobot.jabatan[position];
             }
 
             @Override
@@ -323,16 +314,13 @@ public class DetailKegiatan extends AppCompatActivity {
     }
 
     private void Status() {
-        final List<String> categoriesStatus = new ArrayList<>();
-        categoriesStatus.add("Online");
-        categoriesStatus.add("Offline");
-        ArrayAdapter<String> dataAdapterStatus = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoriesStatus);
+        ArrayAdapter<String> dataAdapterStatus = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Bobot.jabatan);
         dataAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStatus.setAdapter(dataAdapterStatus);
         spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                status = categoriesStatus.get(position);
+                status = Bobot.jabatan[position];
             }
 
             @Override
@@ -343,18 +331,13 @@ public class DetailKegiatan extends AppCompatActivity {
     }
 
     private void Jarak() {
-        final List<String> categoriesJarak = new ArrayList<>();
-        categoriesJarak.add("0-5 km");
-        categoriesJarak.add("6-10 km");
-        categoriesJarak.add("11-20 km");
-        categoriesJarak.add(">20 km");
-        ArrayAdapter<String> dataAdapterJarak = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoriesJarak);
+        ArrayAdapter<String> dataAdapterJarak = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Bobot.jarak);
         dataAdapterJarak.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJarak.setAdapter(dataAdapterJarak);
         spinnerJarak.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                jarak = categoriesJarak.get(position);
+                jarak = Bobot.jarak[position];
             }
 
             @Override
@@ -365,18 +348,13 @@ public class DetailKegiatan extends AppCompatActivity {
     }
 
     private void Absensi() {
-        final List<String> categoriesAbsensi = new ArrayList<>();
-        categoriesAbsensi.add("Tetap Hadir");
-        categoriesAbsensi.add("Izin setengah hari");
-        categoriesAbsensi.add("Cuti");
-        categoriesAbsensi.add("Tanpa Keterangan");
-        ArrayAdapter<String> dataAdapterAbsensi = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesAbsensi);
+        ArrayAdapter<String> dataAdapterAbsensi = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Bobot.absensi);
         dataAdapterAbsensi.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAbsensi.setAdapter(dataAdapterAbsensi);
         spinnerAbsensi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                absensi = categoriesAbsensi.get(position);
+                absensi = Bobot.absensi[position];
             }
 
             @Override
@@ -397,7 +375,6 @@ public class DetailKegiatan extends AppCompatActivity {
             public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                 tanggal = mYear + "-" + (mMonth + 1) + "-" + mDayOfMonth;
                 String tanggal2 = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
-
                 editCalendar.setText(tanggal2);
             }
         };

@@ -32,6 +32,7 @@ import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class DssFragment extends Fragment {
 
@@ -78,54 +79,54 @@ public class DssFragment extends Fragment {
         });
 
 
-
     }
 
     public void testMobile() {
 
+        Log.e("AGENDA SIZE", "" + agendas.size());
+
         for (int i = 0; i < agendas.size(); i++) {
+
+            Log.e("TRACK", "1");
 
             HasilKonversi hasil = new HasilKonversi();
             AgendaTable agenda = agendas.get(i);
 
-            for (int j = 0; j < label.size(); j++) {
-                if (label.get(j).getValue().equals(agenda.getMeeting())) {
-                    hasil.setMeeting(label.get(j).getNilai());
-                } else if (label.get(j).getValue().equals(agenda.getJabatan())) {
-                    hasil.setJabatan(label.get(j).getNilai());
-                } else if (label.get(j).getValue().equals(agenda.getStatus())) {
-                    hasil.setStatus(label.get(j).getNilai());
-                } else {
-                    List<String> categoriesJarak = new ArrayList<>();
-                    categoriesJarak.add("0-5 km");
-                    categoriesJarak.add("6-10 km");
-                    categoriesJarak.add("11-20 km");
-                    categoriesJarak.add(">20 km");
-
-                    for (int k = 0; k < categoriesJarak.size(); k++) {
-                        if (categoriesJarak.get(k).equals(agenda.getJarak())) {
-                            hasil.setJarak(Bobot.jarakCriteria[k]);
-                        }
-                    }
-
-                    List<String> categoriesAbsensi = new ArrayList<>();
-                    categoriesAbsensi.add("Tetap Hadir");
-                    categoriesAbsensi.add("Izin setengah hari");
-                    categoriesAbsensi.add("Cuti");
-                    categoriesAbsensi.add("Tanpa Keterangan");
-
-                    for (int k = 0; k < categoriesAbsensi.size(); k++) {
-                        if (categoriesAbsensi.get(k).equals(agenda.getAbsensi())) {
-                            hasil.setAbsensi(Bobot.absensiCriteria[k]);
-                        }
-                    }
+            for (int k = 0; k < Bobot.meeting.length; k++) {
+                if (Bobot.meeting[k].equals(agenda.getMeeting())) {
+                    hasil.setMeeting(Bobot.meetingCriteria[k]);
                 }
             }
+
+            for (int k = 0; k < Bobot.jabatan.length; k++) {
+                if (Bobot.jabatan[k].equals(agenda.getJabatan())) {
+                    hasil.setJabatan(Bobot.jabatanCriteria[k]);
+                }
+            }
+
+            for (int k = 0; k < Bobot.status.length; k++) {
+                if (Bobot.status[k].equals(agenda.getStatus())) {
+                    hasil.setStatus(Bobot.statusCriteria[k]);
+                }
+            }
+
+            for (int k = 0; k < Bobot.jarak.length; k++) {
+                if (Bobot.jarak[k].equals(agenda.getJarak())) {
+                    hasil.setJarak(Bobot.jarakCriteria[k]);
+                }
+            }
+
+            for (int k = 0; k < Bobot.absensi.length; k++) {
+                if (Bobot.absensi[k].equals(agenda.getAbsensi())) {
+                    hasil.setAbsensi(Bobot.absensiCriteria[k]);
+                }
+            }
+
             hasil.setTanggal(agenda.getTanggal());
             hasil.setName(agenda.getName());
             hasils.add(hasil);
         }
-
+        Log.e("HASIL", hasils.size()+"");
         for (int i = 0; i < hasils.size(); i++) {
             Log.e("Data Hasil", hasils.get(i).getName() + ", " +
                     hasils.get(i).getTanggal() + ", " +
@@ -135,7 +136,10 @@ public class DssFragment extends Fragment {
                     hasils.get(i).getStatus() + "," +
                     hasils.get(i).getAbsensi());
         }
+
+        Log.e("JUMLAH", "" + hasils.size());
         if (hasils.size() > 2) {
+            Log.e("TRACK", "3");
             Criteria criteriaJarak = new Criteria("Jarak", 4, true);
             Criteria criteriaMeeting = new Criteria("Meeting", 4);
             Criteria criteriaJabatan = new Criteria("Jabatan", 5);
@@ -145,6 +149,7 @@ public class DssFragment extends Fragment {
             Topsis topsis = new Topsis();
 
             for (int i = 0; i < hasils.size(); i++) {
+                Log.e("TRACK", i+1+"");
 
                 Alternative agenda = new Alternative(hasils.get(i).getName());
                 agenda.addCriteriaValue(criteriaJarak, hasils.get(i).getJarak());
@@ -157,6 +162,7 @@ public class DssFragment extends Fragment {
             }
 
             try {
+                Log.e("FINAL HASIL", "5");
                 Alternative result = topsis.calculateOptimalSolution();
                 ans1.setText(result.getName());
                 ans2.setText("" + result.getCalculatedPerformanceScore());
@@ -191,7 +197,7 @@ public class DssFragment extends Fragment {
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                tanggal = mYear + "-" + (mMonth + 1) + "-" + mDayOfMonth;
+                tanggal = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
                 String tanggal2 = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
 
                 masukTanggal.setText(tanggal2);
@@ -202,18 +208,22 @@ public class DssFragment extends Fragment {
                         DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
                         List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
                         List<AgendaTable> agenda = db.agendaDao().filterDate(tanggal);
+                        
                         label.addAll(list);
                         agendas.addAll(agenda);
 
-                        for (int i = 0; i < list.size(); i++) {
-                            Log.e("Data Label", list.get(i).getName() + ", " + list.get(i).getValue() + ", " + list.get(i).getNilai());
+                        for (int i = 0; i < agenda.size(); i++) {
+                            Log.e("Data Agenda", agenda.get(i).getName() + ", " + agenda.get(i).getAbsensi() + ", " + agenda.get(i).getMeeting());
                         }
 
-                        testMobile();
+                        getActivity().runOnUiThread(DssFragment.this::testMobile);
+
 
                         onBackPressed();
                     }
                 });
+
+
             }
         };
 

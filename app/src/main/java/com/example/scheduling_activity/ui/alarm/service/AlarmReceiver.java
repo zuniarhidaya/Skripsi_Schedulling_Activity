@@ -23,7 +23,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         Log.d("ALARM", "onReceive");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
             String name = "Reminder Agenda";
             String description = "Pengingat untuk Agenda";
             NotificationChannel channel = new NotificationChannel("ReminderId", name, NotificationManager.IMPORTANCE_HIGH);
