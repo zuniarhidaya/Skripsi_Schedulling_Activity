@@ -33,9 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         editText1 = (EditText) findViewById(R.id.editNama);
-        editText2 = (EditText) findViewById(R.id.editEmail);
+        //editText2 = (EditText) findViewById(R.id.editEmail);
         editText3 = (EditText) findViewById(R.id.editJabatan);
-        editText4 = (EditText) findViewById(R.id.editNotlpn);
+        //editText4 = (EditText) findViewById(R.id.editNotlpn);
         editText6 = (EditText) findViewById(R.id.editId);
         button1 = (Button) findViewById(R.id.btnSimpan);
 
@@ -43,14 +43,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String nama = editText1.getText().toString();
-                String email = editText2.getText().toString();
+                //String email = editText2.getText().toString();
                 String jabatan = editText3.getText().toString();
-                String telpon = editText4.getText().toString();
+                //String telpon = editText4.getText().toString();
                 String nip = editText6.getText().toString();
 
-                if (!nama.isEmpty() && !email.isEmpty() && !jabatan.isEmpty() && !telpon.isEmpty() && !nip.isEmpty()) {
+                if (!nama.isEmpty() &&  !jabatan.isEmpty() && !nip.isEmpty()) {
 
-                    session.createLoginSession(nama, email, jabatan, telpon, nip);
+                    session.createLoginSession(nama, jabatan, nip);
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {

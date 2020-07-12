@@ -21,10 +21,10 @@ public class SessionManager {
     private static String PREF_NAME = "";
     private static final String IS_LOGIN = "IsLoggedIn";
     public static final String KEY_NAMA = "name";
-    public static final String KEY_EMAIL = "email";
+    //public static final String KEY_EMAIL = "email";
     //public static final String KEY_PASSWORD = "password";
     public static final String KEY_JABATAN = "jabatan";
-    public static final String KEY_TELPON = "telpon";
+    //public static final String KEY_TELPON = "telpon";
     public static final String KEY_NIP = "nip";
     public static final String KEY_IS_CRITERIA = "criteria";
 
@@ -40,13 +40,13 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    public void createLoginSession(String nama, String email, String jabatan, String telpon, String nip){
+    public void createLoginSession(String nama, String jabatan, String nip){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_NAMA, nama);
-        editor.putString(KEY_EMAIL, email);
+        //editor.putString(KEY_EMAIL, email);
         //editor.putString(KEY_PASSWORD, password);
         editor.putString(KEY_JABATAN, jabatan);
-        editor.putString(KEY_TELPON, telpon);
+        //editor.putString(KEY_TELPON, telpon);
         editor.putString(KEY_NIP, nip);
         editor.commit();
     }
@@ -86,13 +86,13 @@ public class SessionManager {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
-    public boolean isLabelling(){
-        return pref.getBoolean(IS_LABEL, false);
-    }
+//    public boolean isLabelling(){
+//        return pref.getBoolean(IS_LABEL, false);
+//    }
 
-    public void setLabelling(){
-        editor.putBoolean(IS_LABEL, true);
-    }
+//    public void setLabelling(){
+//        editor.putBoolean(IS_LABEL, true);
+//    }
 
     public String getName() {
         return pref.getString(KEY_NAMA, "");
@@ -102,11 +102,11 @@ public class SessionManager {
         editor.commit();
     }
 
-    public String getEmail(){ return pref.getString(KEY_EMAIL, ""); }
-    public void setEmail(String email) {
-        editor.putString(KEY_EMAIL, "");
-        editor.commit();
-    }
+//    public String getEmail(){ return pref.getString(KEY_EMAIL, ""); }
+//    public void setEmail(String email) {
+//        editor.putString(KEY_EMAIL, "");
+//        editor.commit();
+//    }
 
     public String getJabatan(){ return pref.getString(KEY_JABATAN, ""); }
     public void setJabatan(String jabatan) {
@@ -114,11 +114,11 @@ public class SessionManager {
         editor.commit();
     }
 
-    public String getTelpon(){ return pref.getString(KEY_TELPON, ""); }
-    public void setTelpon(String telpon) {
-        editor.putString(KEY_TELPON, "");
-        editor.commit();
-    }
+//    public String getTelpon(){ return pref.getString(KEY_TELPON, ""); }
+//    public void setTelpon(String telpon) {
+//        editor.putString(KEY_TELPON, "");
+//        editor.commit();
+//    }
 
     public String getNip(){ return pref.getString(KEY_NIP, ""); }
     public void setNip(String nip) {

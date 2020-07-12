@@ -35,7 +35,6 @@ import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 public class DssFragment extends Fragment {
 
@@ -72,8 +71,8 @@ public class DssFragment extends Fragment {
 
         ans1 = (TextView) view.findViewById(R.id.ans_1);
         ans2 = (TextView) view.findViewById(R.id.ans_2);
-        ans3 = (TextView) view.findViewById(R.id.ans_3);
-        ans4 = (TextView) view.findViewById(R.id.ans_4);
+        //ans3 = (TextView) view.findViewById(R.id.ans_3);
+        //ans4 = (TextView) view.findViewById(R.id.ans_4);
         recyclerView = view.findViewById(R.id.rv_hasil);
         masukTanggal = (EditText) view.findViewById(R.id.masukTanggal);
         masukTanggal.setOnClickListener(new View.OnClickListener() {
@@ -145,11 +144,11 @@ public class DssFragment extends Fragment {
         Log.e("JUMLAH", "" + hasils.size());
         if (hasils.size() > 2) {
             Log.e("TRACK", "3");
-            Criteria criteriaJarak = new Criteria("Jarak", 4, true);
+            Criteria criteriaJarak = new Criteria("Jarak", 3, true);
             Criteria criteriaMeeting = new Criteria("Meeting", 4);
             Criteria criteriaJabatan = new Criteria("Jabatan", 5);
             Criteria criteriaStatus = new Criteria("Status", 3);
-            Criteria criteriaAbsensi = new Criteria("Absensi", 3, true);
+            Criteria criteriaAbsensi = new Criteria("Absensi", 4, true);
 
             Topsis topsis = new Topsis();
 

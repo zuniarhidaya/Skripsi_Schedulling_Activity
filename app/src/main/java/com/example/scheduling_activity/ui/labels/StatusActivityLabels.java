@@ -122,7 +122,7 @@ public class StatusActivityLabels extends AppCompatActivity {
                         }
                     });
                     Intent intent;
-                    sessionManager.setLabelling();
+                    //sessionManager.setLabelling();
                     intent = new Intent(StatusActivityLabels.this, MainActivity.class);
                     SessionManager sessionManager = new SessionManager(StatusActivityLabels.this);
                     sessionManager.setDoneCriteria(true);
