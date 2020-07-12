@@ -29,4 +29,6 @@
 
     <string name="teks">Aplikasi ini akan membantu anda dalam menyusun dan merekomendasikan agenda prioritas menggunakan algoritma TOPSIS </string>
     <string name="schedulling">Schedulling Activity</string>
+    <string name="list">Daftar Agenda pada tanggal : </string>
+    <string name="tanggal">Tanggal</string>
 </resources>

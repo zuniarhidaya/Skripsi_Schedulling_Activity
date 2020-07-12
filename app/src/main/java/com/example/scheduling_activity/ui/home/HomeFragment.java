@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     private String tanggal;
     private TextView hari;
     private TextView bulan;
+    private TextView tanggalAgenda;
     private RecyclerView recyclerView;
 
 
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
         CalendarView calendarView = ((CalendarView) view.findViewById(R.id.calendar));
         //bulan = (TextView) view.findViewById(R.id.bulan);
         recyclerView = view.findViewById(R.id.agendaToday);
+        tanggalAgenda = (TextView) view.findViewById(R.id.tanggal);
 
 
         Calendar calendar = Calendar.getInstance();
@@ -105,9 +107,8 @@ public class HomeFragment extends Fragment {
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
                             recyclerView.setAdapter(homeAdapter);
 
+                            tanggalAgenda.setText(pickedDate);
                         });
-
-
                     }
                 });
             }

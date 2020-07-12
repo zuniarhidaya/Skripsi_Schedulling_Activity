@@ -20,13 +20,21 @@
             tools:context=".MainActivity" />
 
         <TextView
-            android:id="@+id/tanggal"
+            android:id="@+id/listAgenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="10dp"
-            android:text="Tanggal"
+            android:text="@string/list"
             android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/tanggal"
+            android:textColor="#000"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/agendaToday"
