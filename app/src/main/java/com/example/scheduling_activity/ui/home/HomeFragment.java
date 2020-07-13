@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        //Dafult hari ini (pertama kali buka)
+        //Dafault hari ini (pertama kali buka)
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

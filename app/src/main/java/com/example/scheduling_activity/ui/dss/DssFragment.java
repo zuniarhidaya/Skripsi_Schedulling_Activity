@@ -192,9 +192,6 @@ public class DssFragment extends Fragment {
             result.setName(alternative.getName());
             result.setScore(alternative.getCalculatedPerformanceScore()+"");
             results.add(result);
-
-            /*ans3.setText("" + alternative.getName());
-            ans4.setText("" + alternative.getCalculatedPerformanceScore());*/
         }
 
         DssAdapter dssAdapter = new DssAdapter(getContext(), results);

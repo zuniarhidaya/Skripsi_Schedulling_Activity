@@ -7,10 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 
 public class AlarmHelper {
-
-
     public static void setAlarm(Context context, Long time, String name) {
-
 
         // name = nama agenda
         Intent i = new Intent(context, AlarmReceiver.class).putExtra("name", name);
