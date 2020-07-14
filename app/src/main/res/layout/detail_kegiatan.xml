@@ -14,8 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/DodgerBlue"
             android:layout_margin="25dp"
+            android:background="#CC76E4"
             android:orientation="vertical">
 
             <TextView
@@ -31,23 +31,30 @@
                 android:id="@+id/editNama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/White"
-                android:textColor="@color/White"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
                 android:gravity="center_horizontal"
-                android:hint="Nama Agenda" />
+                android:hint="Nama Agenda"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/editCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/White"
-                android:textColor="@color/White"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
                 android:focusable="false"
                 android:gravity="center_horizontal"
-                android:hint="Pilih Tanggal" />
+                android:hint="Pilih Tanggal"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -56,162 +63,193 @@
 
                 <EditText
                     android:id="@+id/editMulai"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/White"
-                    android:textColor="@color/White"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_edit_text"
                     android:focusable="false"
                     android:hint="Waktu Mulai"
-                    android:layout_alignParentStart="true"/>
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/editAkhir"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
-                    android:textColorHint="@color/White"
-                    android:textColor="@color/White"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_edit_text"
                     android:focusable="false"
                     android:hint="Waktu Selesai"
-                    android:layout_alignParentEnd="true"/>
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/White"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:gravity="center_horizontal"
-                    android:text="Jenis Agenda"
-                    android:textSize="16sp" />
+                    android:text="Jenis Agenda :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <Spinner
                     android:id="@+id/spinnerAgenda"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/White"
-                    android:text="Jabatan Client Anda"
-                    android:textSize="16sp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:text="Jabatan Client :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <Spinner
                     android:id="@+id/spinnerJabatan"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/White"
-                    android:text="Jarak Agenda Anda"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="10dp"
+                   android:layout_gravity="center_vertical"
+                    android:text="Jarak Agenda Anda : "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <Spinner
                     android:id="@+id/spinnerJarak"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/White"
-                    android:text="Status Pertemuan"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Status Pertemuan :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <Spinner
+                    android:layout_marginStart="5dp"
                     android:id="@+id/spinnerStatus"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/White"
-                    android:text="Absensi untuk Kantor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Absensi untuk Kantor :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <Spinner
+                    android:layout_marginStart="5dp"
                     android:id="@+id/spinnerAbsensi"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:layout_marginTop="10dp"
-                android:text="Tambah Pengingat"
+                android:buttonTint="@color/White"
                 android:id="@+id/cb_set_reminder"
-                android:layout_gravity="center_horizontal"
-                android:textColorHighlight="@color/White"
-                android:textColor="@color/White"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="Tambah Pengingat"
+                android:textColor="@color/White"
+                android:textColorHighlight="@color/White" />
 
             <Button
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:id="@+id/btnSimpan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="30dp"
-                android:background="@color/White"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_button"
                 android:padding="5dp"
                 android:text="Simpan"
                 android:textColor="@color/hitam" />

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -52,10 +53,20 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
 
+        final SessionManager session = new SessionManager(getApplicationContext());
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         onBackPressed();
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView txtName = headerView.findViewById(R.id.txt_name_nav);
+        TextView txtJabatan = headerView.findViewById(R.id.txt_jabatan_nav);
+
+        txtName.setText(session.getName());
+        txtJabatan.setText(session.getJabatan());
 
         Dexter.withContext(this)
                 .withPermissions(

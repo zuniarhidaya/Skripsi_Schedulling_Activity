@@ -6,10 +6,15 @@
         <item name="colorPrimary">#919191</item>
         <item name="colorPrimaryDark">@color/Tomato</item>
         <item name="colorAccent">@color/Red</item>
+        <item name="android:textViewStyle">@style/PoppinsFontStyle</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PoppinsFontStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
 
 </resources>

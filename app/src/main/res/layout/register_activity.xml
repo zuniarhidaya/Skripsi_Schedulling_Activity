@@ -65,12 +65,13 @@
 
                 <ImageView
                     android:id="@+id/icon1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="#6fa8dc"
                     android:src="@drawable/nama_01" />
 
                 <EditText
+                    android:padding="10dp"
                     android:id="@+id/editNama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,12 +123,13 @@
 
                         <ImageView
                             android:id="@+id/icon3"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:background="#6fa8dc"
                             android:src="@drawable/jabatan_01"/>
 
                         <EditText
+                            android:padding="10dp"
                             android:id="@+id/editJabatan"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -177,8 +179,8 @@
 
                                     <ImageView
                                         android:id="@+id/icon6"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
                                         android:background="#6fa8dc"
                                         android:src="@drawable/nomor_pegawai_01"/>
 
@@ -209,14 +211,15 @@
                 android:visibility="gone" />
         </RelativeLayout>
         <Button
+            android:background="@drawable/bg_button"
             android:id="@+id/btnSimpan"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
             android:text="@string/simpan"
             android:textColor="#000"
             android:textSize="15sp"/>

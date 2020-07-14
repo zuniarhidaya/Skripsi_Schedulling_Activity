@@ -144,4 +144,5 @@
     <color name="TransWhite">#73000000</color>
     <color name="Black80">#b3000000</color>
     <color name="Transparant">#00000000</color>
+    <color name="black">#000</color>
 </resources>
