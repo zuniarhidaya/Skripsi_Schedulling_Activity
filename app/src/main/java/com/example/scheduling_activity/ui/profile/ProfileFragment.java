@@ -91,6 +91,10 @@ public class ProfileFragment extends Fragment {
         EditText edtNIK = dialogView.findViewById(R.id.edtNIK);
         Button btnEdit = dialogView.findViewById(R.id.btn_edit);
 
+        edtNama.setText(session.getName());
+        edtJabatan.setText(session.getJabatan());
+        edtNIK.setText(session.getNip());
+
         btnEdit.setOnClickListener(v -> {
             String nama = edtNama.getText().toString();
             String jabatan = edtJabatan.getText().toString();
