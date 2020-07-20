@@ -16,5 +16,13 @@
             android:id="@+id/nav_dss"
             android:icon="@drawable/ic_access_alarms_black_24dp"
             android:title="@string/menu_spk" />
+        <item
+            android:id="@+id/nav_manager"
+            android:icon="@drawable/abc_vector_test"
+            android:title="Assign Manager" />
+        <item
+            android:id="@+id/nav_pengajuan"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Pengajuan Workshop" />
     </group>
 </menu>

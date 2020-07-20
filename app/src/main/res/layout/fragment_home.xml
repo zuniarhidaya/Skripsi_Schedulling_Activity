@@ -6,41 +6,45 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <CalendarView
-            android:id="@+id/calendar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".MainActivity" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/listAgenda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/list"
-            android:textColor="#000" />
 
-        <TextView
-            android:id="@+id/tanggal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/tanggal"
-            android:textColor="#000"/>
+            <CalendarView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".MainActivity" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/agendaToday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_agenda" />
+            <TextView
+                android:id="@+id/listAgenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/list"
+                android:textColor="#000" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tanggal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/tanggal"
+                android:textColor="#000" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/agendaToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_agenda" />
+        </LinearLayout>
+    </RelativeLayout>
+
 </androidx.core.widget.NestedScrollView>

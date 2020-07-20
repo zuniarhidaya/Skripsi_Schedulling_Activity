@@ -22,4 +22,6 @@ public interface AgendaDao {
     void deleteAgenda(AgendaTable agenda);
     @Query("Select * from agenda where tanggal = :date")
     List<AgendaTable> filterDate(String date) ;
+    @Query("Select * from agenda where karyawan = 1 ")
+    List<AgendaTable> filterKaryawan();
 }

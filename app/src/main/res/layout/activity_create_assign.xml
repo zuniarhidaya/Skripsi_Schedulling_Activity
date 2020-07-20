@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detail.DetailKegiatan">
+    tools:context=".ui.manager.CreateAssignActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="Detail Kegiatan"
+                android:text="Detail Assign"
                 android:textColor="@color/White"
                 android:textSize="36sp" />
 
@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                   android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:text="Jarak Agenda Anda : "
                     android:textColor="@color/black"
                     android:textSize="14sp" />

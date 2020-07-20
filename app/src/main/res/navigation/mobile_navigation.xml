@@ -22,15 +22,21 @@
 
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_alarm"-->
-<!--        android:name="com.example.scheduling_activity.ui.alarm.AlarmFragment"-->
-<!--        android:label="Alarm"-->
-<!--        tools:layout="@layout/fragment_alarm" />-->
-
     <fragment
         android:id="@+id/nav_dss"
         android:name="com.example.scheduling_activity.ui.dss.DssFragment"
-        android:label="TOPSIS Algorithm"
+        android:label="SPK"
         tools:layout="@layout/fragment_dss" />
+
+    <fragment
+        android:id="@+id/nav_manager"
+        android:name="com.example.scheduling_activity.ui.manager.ManagerFragment"
+        android:label="Assign Manager"
+        tools:layout="@layout/fragment_manager" />
+
+    <fragment
+        android:id="@+id/nav_pengajuan"
+        android:name="com.example.scheduling_activity.ui.manager.PengajuanFragment"
+        android:label="Pengajuan Workshop"
+        tools:layout="@layout/fragment_pengajuan" />
 </navigation>

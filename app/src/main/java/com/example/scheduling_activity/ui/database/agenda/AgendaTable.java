@@ -32,6 +32,8 @@ public class AgendaTable {
     private boolean isReminder = false;
     @ColumnInfo(name = "time")
     private Long time = 0L;
+    @ColumnInfo(name = "karyawan")
+    private boolean isKaryawan = false;
 
     public Long getTime() {
         return time;
@@ -139,5 +141,13 @@ public class AgendaTable {
 
     public void setReminder(boolean reminder) {
         isReminder = reminder;
+    }
+
+    public void setKaryawan(boolean karyawan) {
+        isKaryawan = karyawan;
+    }
+
+    public boolean getKaryawan() {
+        return isKaryawan;
     }
 }
