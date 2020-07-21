@@ -18,11 +18,11 @@
             android:title="@string/menu_spk" />
         <item
             android:id="@+id/nav_manager"
-            android:icon="@drawable/abc_vector_test"
+            android:icon="@drawable/ic_baseline_assignment_24"
             android:title="Assign Manager" />
         <item
             android:id="@+id/nav_pengajuan"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_baseline_assignment_ind_24"
             android:title="Pengajuan Workshop" />
     </group>
 </menu>

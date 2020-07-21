@@ -33,7 +33,6 @@ import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import com.example.scheduling_activity.ui.dss.DssAdapter;
-import com.example.scheduling_activity.ui.dss.DssFragment;
 import com.example.scheduling_activity.ui.dss.Result;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -86,8 +85,6 @@ public class ManagerFragment extends Fragment {
 
         ans1 = (TextView) view.findViewById(R.id.ans_1);
         ans2 = (TextView) view.findViewById(R.id.ans_2);
-        //ans3 = (TextView) view.findViewById(R.id.ans_3);
-        //ans4 = (TextView) view.findViewById(R.id.ans_4);
         recyclerView = view.findViewById(R.id.rv_hasil);
         masukTanggal = (EditText) view.findViewById(R.id.masukTanggal);
         masukTanggal.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +115,7 @@ public class ManagerFragment extends Fragment {
                     public void run() {
                         DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
                         List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
-                        List<AgendaTable> agenda = db.agendaDao().filterDate(tanggal);
+                        List<AgendaTable> agenda = db.agendaDao().filterKaryawan(tanggal);
 
                         label.addAll(list);
                         agendas.addAll(agenda);
@@ -241,7 +238,6 @@ public class ManagerFragment extends Fragment {
 
     private void printDetailedResults(Topsis topsis) {
 
-
         ArrayList<Result> results = new ArrayList<>();
 
         for (Alternative alternative : topsis.getAlternatives()) {
@@ -258,8 +254,4 @@ public class ManagerFragment extends Fragment {
         recyclerView.setAdapter(dssAdapter);
 
     }
-
-
-
-
 }

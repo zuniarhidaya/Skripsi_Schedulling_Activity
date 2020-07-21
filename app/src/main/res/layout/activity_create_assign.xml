@@ -228,7 +228,7 @@
             </LinearLayout>
 
 
-            <!--<androidx.appcompat.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:buttonTint="@color/White"
                 android:id="@+id/cb_set_reminder"
                 android:layout_width="wrap_content"
@@ -237,7 +237,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Tambah Pengingat"
                 android:textColor="@color/White"
-                android:textColorHighlight="@color/White" />-->
+                android:textColorHighlight="@color/White" />
 
             <Button
                 android:layout_marginEnd="16dp"

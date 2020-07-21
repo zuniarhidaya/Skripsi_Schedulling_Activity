@@ -19,5 +19,6 @@ public class Bobot {
     public static String[] status = new String[]{"Online", "Offline"};
     public static String[] jarak = new String[]{"0-5 km", "6-10 km", "11-20 km", ">20 km"};
     public static String[] absensi = new String[]{"Tetap Hadir", "Izin setengah hari", "Cuti", "Tanpa Keterangan"};
+    public static String[] workshop = new String[]{"Workshop Internal", "Workshop Eksternal"};
 
 }

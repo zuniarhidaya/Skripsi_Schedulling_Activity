@@ -21,16 +21,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.scheduling_activity.Bobot;
 import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
+import com.example.scheduling_activity.ui.alarm.service.AlarmHelper;
 import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
-import com.example.scheduling_activity.ui.detail.DetailKegiatan;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateAssignActivity extends AppCompatActivity {
-
 
     private EditText editNama;
     private EditText editCalendar;
@@ -69,6 +72,7 @@ public class CreateAssignActivity extends AppCompatActivity {
         spinnerStatus = (Spinner) findViewById(R.id.spinnerStatus);
         spinnerAbsensi = (Spinner) findViewById(R.id.spinnerAbsensi);
         button1 = (Button) findViewById(R.id.btnSimpan);
+        checkBox = (CheckBox) findViewById(R.id.cb_set_reminder);
 
         agenda();
         jabatan();
@@ -126,6 +130,7 @@ public class CreateAssignActivity extends AppCompatActivity {
                             agen.setKaryawan(true);
 
                             if (checkBox.isChecked()) {
+                                setEvent();
                                 agen.setReminder(true);
                             } else {
                                 agen.setTime(0L);
@@ -150,6 +155,99 @@ public class CreateAssignActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private Long setReminder(String timeInFormatted) {
+
+        String[] date = tanggal.split("-");
+        String[] time = timeInFormatted.split(":");
+
+        int year = Integer.parseInt(date[0]);
+        int month = Integer.parseInt(date[1]);
+        int day = Integer.parseInt(date[2]);
+
+        int hour = Integer.parseInt(time[0]);
+        int minute = Integer.parseInt(time[1]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        String dateFormatted = format.format(calendar.getTimeInMillis());
+
+        try {
+            Date milDate = format.parse(dateFormatted);
+            assert milDate != null;
+            Long timeInMillis = milDate.getTime();
+            AlarmHelper.setAlarm(CreateAssignActivity.this, timeInMillis, agenda);
+            return timeInMillis;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
+
+    private void setEvent() {
+        // get calendar
+/*
+        Long startTime = setReminder(waktu);
+        Long endTime = setReminder(waktuAkhir);
+
+        ContentResolver cr = getContentResolver();
+
+// event insert
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, startTime);
+        values.put(CalendarContract.Events.DTEND, endTime);
+        values.put(CalendarContract.Events.TITLE, agenda);
+        values.put(CalendarContract.Events.DESCRIPTION, agenda);
+        values.put(CalendarContract.Events.CALENDAR_ID, System.currentTimeMillis() / 10);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+        values.put(CalendarContract.Events.EVENT_LOCATION, jabatan);
+        values.put(CalendarContract.Events.GUESTS_CAN_INVITE_OTHERS, "1");
+        values.put(CalendarContract.Events.GUESTS_CAN_SEE_GUESTS, "1");
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Uri event = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+// reminder insert
+        ContentValues reminder = new ContentValues();
+        assert event != null;
+        reminder.put("event_id", Long.parseLong(Objects.requireNonNull(event.getLastPathSegment())));
+        reminder.put("method", 1);
+        reminder.put("minutes", 10);
+        cr.insert(CalendarContract.Reminders.CONTENT_URI, reminder);*/
+
+        Long startTime = setReminder(waktu);
+        Long endTime = setReminder(waktuAkhir);
+
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", startTime);
+        intent.putExtra("allDay", false);
+        //intent.putExtra("rrule", "FREQ=DAILY");
+        intent.putExtra("endTime", endTime);
+        intent.putExtra("title", editNama.getText().toString());
+        startActivity(intent);
+    }
+
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
 
     }
 

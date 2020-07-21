@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Pilih Tanggal untuk menjalankan SPK"
+                android:text="Pilih Tanggal untuk skoring agenda"
                 android:textColor="@color/hitam"
                 android:textSize="16sp" />
 

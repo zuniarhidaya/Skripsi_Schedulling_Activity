@@ -20,8 +20,15 @@ public interface AgendaDao {
     void updateAgenda(AgendaTable agenda);
     @Delete
     void deleteAgenda(AgendaTable agenda);
+
+
     @Query("Select * from agenda where tanggal = :date")
     List<AgendaTable> filterDate(String date) ;
-    @Query("Select * from agenda where karyawan = 1 ")
-    List<AgendaTable> filterKaryawan();
+
+
+    @Query("Select * from agenda where karyawan = 1 and tanggal = :date")
+    List<AgendaTable> filterKaryawan(String date);
+
+    @Query("Select * from agenda where karyawan = 0 and tanggal = :date ")
+    List<AgendaTable> filterWorkshop(String date);
 }

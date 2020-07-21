@@ -20,7 +20,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.manager.CreatePengajuanActivity"></activity>
+        <activity android:name=".ui.register.RegisterApiActivity"></activity>
+        <activity android:name=".ui.login.LoginApiActivity" />
+        <activity android:name=".ui.manager.CreatePengajuanActivity" />
         <activity android:name=".ui.manager.CreateAssignActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>

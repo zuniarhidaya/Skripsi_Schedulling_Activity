@@ -96,34 +96,6 @@
                     android:textSize="16sp" />
             </RelativeLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="16dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginEnd="16dp"-->
-<!--                android:background="@drawable/bg_edit_text"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:layout_marginStart="10dp"-->
-<!--                    android:gravity="center_horizontal"-->
-<!--                    android:text="Jenis Agenda :"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="14sp" />-->
-
-<!--                <Spinner-->
-<!--                    android:id="@+id/spinnerAgenda"-->
-<!--                    android:layout_width="fill_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:gravity="center_horizontal" />-->
-<!--            </LinearLayout>-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,17 +110,45 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="Jabatan Client :"
+                    android:gravity="center_horizontal"
+                    android:text="Jenis Agenda :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <Spinner
-                    android:id="@+id/spinnerJabatan"
+                    android:id="@+id/spinnerAgenda"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:background="@drawable/bg_edit_text"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:text="Jabatan Client :"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="14sp" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/spinnerJabatan"-->
+<!--                    android:layout_width="fill_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:gravity="center_horizontal" />-->
+<!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
