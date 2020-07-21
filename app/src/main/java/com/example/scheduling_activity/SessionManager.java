@@ -27,10 +27,12 @@ public class SessionManager {
     //public static final String KEY_TELPON = "telpon";
     public static final String KEY_NIP = "nip";
     public static final String KEY_IS_CRITERIA = "criteria";
-
-
-
     public static final String IS_LABEL = "IsLabelling";
+
+
+    public static final String ROLE = "role";
+
+
 
     // Constructor
     public SessionManager(Context context){
@@ -113,6 +115,8 @@ public class SessionManager {
         editor.putString(KEY_JABATAN, "");
         editor.commit();
     }
+
+
 
 //    public String getTelpon(){ return pref.getString(KEY_TELPON, ""); }
 //    public void setTelpon(String telpon) {

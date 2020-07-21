@@ -44,12 +44,15 @@ dependencies {
     //implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
 //    implementation 'com.applandeo:material-calendar-view:1.7.0'
 
-    implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-firestore:21.4.2'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+<<<<<<< HEAD
     implementation 'com.android.support:multidex:1.0.3'
+=======
+>>>>>>> 579e5820eda03d23c51534439c7e043672ad25ab
 }

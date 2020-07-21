@@ -21,18 +21,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterApiActivity extends AppCompatActivity {
+
     private static final String TAG = "RegisterApiActivity";
     private EditText editText1;
     private EditText editText3;
     private EditText editText6;
     private Spinner spinnerJabatan;
+    private EditText edtNip;
+    private EditText edtEmail;
     private Button button1;
 
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +46,20 @@ public class RegisterApiActivity extends AppCompatActivity {
         editText6 = (EditText) findViewById(R.id.editId);
         spinnerJabatan = (Spinner) findViewById(R.id.spinnerRegis);
         button1 = (Button) findViewById(R.id.btnSimpan);
+        edtNip = findViewById(R.id.edt_nip);
+        edtEmail = findViewById(R.id.edt_email);
 
         mAuth = FirebaseAuth.getInstance();
 
-        Jabatan();
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register(editText1.getText().toString(),
-                        editText6.getText().toString(),
-                        editText3.getText().toString());
-            }
-        });
+
+        button1.setOnClickListener(v -> register(edtEmail.getText().toString(),
+                editText3.getText().toString(),
+                editText6.getText().toString(),
+                edtNip.getText().toString(),
+                editText1.getText().toString()));
     }
 
-    private void register(String email, String password, String jabatan){
+    private void register(String email, String password, String jabatan, String nip, String nama) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -73,7 +75,7 @@ public class RegisterApiActivity extends AppCompatActivity {
                                             user.getUid(),
                                             email,
                                             password,
-                                            jabatan);
+                                            jabatan, nip, nama);
                             addDataToFirestore(userModel);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -85,7 +87,7 @@ public class RegisterApiActivity extends AppCompatActivity {
                 });
     }
 
-    private void addDataToFirestore(UserModel user){
+    private void addDataToFirestore(UserModel user) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users")

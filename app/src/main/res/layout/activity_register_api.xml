@@ -144,7 +144,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/icon6"
                             android:layout_alignParentTop="true"
-                            android:layout_toRightOf="@id/icon6"
+                            android:layout_toEndOf="@id/icon6"
                             android:background="@color/WhiteSmoke"
                             android:hint="Password"
                             android:imeOptions="actionNext"
@@ -152,6 +152,62 @@
                             android:paddingStart="10dp" />
 
                     </RelativeLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/relativeLayout7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/relativeLayout6"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="#6fa8dc"
+                            android:src="@drawable/nomor_pegawai_01"/>
+
+                        <EditText
+                            android:hint="NIP"
+                            android:id="@+id/edt_nip"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignBottom="@+id/icon6"
+                            android:layout_alignParentTop="true"
+                            android:background="@color/WhiteSmoke"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingStart="10dp"
+                            tools:ignore="RtlSymmetry" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/relativeLayout8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/relativeLayout7"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="#6fa8dc"
+                            android:src="@drawable/nomor_pegawai_01"/>
+
+                        <EditText
+                            android:hint="Email"
+                            android:id="@+id/edt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignBottom="@+id/icon6"
+                            android:layout_alignParentTop="true"
+                            android:background="@color/WhiteSmoke"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:paddingStart="10dp"
+                            tools:ignore="RtlSymmetry" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </RelativeLayout>
             </RelativeLayout>
 

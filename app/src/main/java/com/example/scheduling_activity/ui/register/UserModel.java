@@ -10,6 +10,34 @@ public class UserModel {
     private String email;
     private String password;
     private String jabatan;
+    private String nip;
+    private String nama;
+
+
+    public UserModel(String userID, String email, String password, String jabatan, String nip, String nama) {
+        this.userID = userID;
+        this.email = email;
+        this.password = password;
+        this.jabatan = jabatan;
+        this.nip = nip;
+        this.nama = nama;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
 
     public String getEmail() {
         return email;
@@ -43,12 +71,5 @@ public class UserModel {
         this.userID = userID;
     }
 
-
-    public UserModel(String userID, String email, String password, String jabatan) {
-        this.userID = userID;
-        this.email = email;
-        this.password = password;
-        this.jabatan = jabatan;
-    }
 }
 
