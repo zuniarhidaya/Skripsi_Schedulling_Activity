@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scheduling_activity.Bobot;
@@ -24,7 +25,16 @@ import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.ui.alarm.service.AlarmHelper;
 import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
+import com.example.scheduling_activity.ui.database.agenda.AgendaModel;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
+import com.example.scheduling_activity.ui.login.LoginApiActivity;
+import com.example.scheduling_activity.ui.register.RegisterApiActivity;
+import com.example.scheduling_activity.ui.register.UserModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CreateAssignActivity extends AppCompatActivity {
+    private static final String TAG = "CreateAssignActivity";
 
     private EditText editNama;
     private EditText editCalendar;
@@ -139,6 +150,7 @@ public class CreateAssignActivity extends AppCompatActivity {
 
                             db.agendaDao().insertAgenda(agen);
 
+                            addDataAgendaToFirestore(agen);
                             for (int i = 0; i < list.size(); i++) {
                                 Log.e("Data", list.get(i).getName() + ", " + list.get(i).getTanggal() + ", " + list.get(i).getMeeting() + ", " + list.get(i).getJabatan() + ", " + list.get(i).getJarak() + ", " + list.get(i).getStatus() + ", " + list.get(i).getAbsensi());
                             }
@@ -155,6 +167,27 @@ public class CreateAssignActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void addDataAgendaToFirestore(AgendaTable agendaTable) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("agenda")
+                .document(agendaTable.getTanggal())
+                .set(agendaTable)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: berhasil tambah agenda");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
     private Long setReminder(String timeInFormatted) {

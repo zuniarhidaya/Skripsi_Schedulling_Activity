@@ -1,5 +1,6 @@
 package com.example.scheduling_activity.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.ui.AppBarConfiguration;
 
+import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.SessionManager;
+import com.example.scheduling_activity.ui.register.RegisterApiActivity;
 import com.example.scheduling_activity.ui.register.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +53,15 @@ public class LoginApiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 login(editUsername.getText().toString(), editPassword.getText().toString());
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginApiActivity.this, RegisterApiActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -94,6 +107,8 @@ public class LoginApiActivity extends AppCompatActivity {
                         user.getJabatan(),
                         user.getNip()
                 );
+
+                startActivity(new Intent(LoginApiActivity.this, MainActivity.class));
             }
         });
     }

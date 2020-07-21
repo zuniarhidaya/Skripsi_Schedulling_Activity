@@ -34,8 +34,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+<!--        <activity android:name=".LoginActivity" />-->
+<!--        <activity android:name=".RegisterActivity" />-->
         <activity android:name=".ui.detail.DetailKegiatan" />
 
         <receiver android:name=".ui.alarm.service.AlarmReceiver" />

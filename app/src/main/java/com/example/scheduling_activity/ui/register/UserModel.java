@@ -14,6 +14,9 @@ public class UserModel {
     private String nama;
 
 
+    public UserModel() {
+    }
+
     public UserModel(String userID, String email, String password, String jabatan, String nip, String nama) {
         this.userID = userID;
         this.email = email;

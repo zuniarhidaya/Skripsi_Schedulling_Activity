@@ -2,8 +2,10 @@ package com.example.scheduling_activity.ui.workshop;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,12 +25,23 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.scheduling_activity.Bobot;
+import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
+import com.example.scheduling_activity.ui.database.AppExecutors;
+import com.example.scheduling_activity.ui.database.DatabaseHelper;
+import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
+import com.example.scheduling_activity.ui.manager.CreatePengajuanActivity;
 import com.example.scheduling_activity.ui.manager.ManagerViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class CreateWorkshopFragment extends Fragment {
+
+    private static final String TAG = "CreateWorkshopActivity";
 
     private CreateWorkshopViewModel viewModel;
     private EditText editNama;
@@ -109,18 +123,80 @@ public class CreateWorkshopFragment extends Fragment {
             }
         });
 
-        button1.setOnClickListener(new View.OnClickListener(){
-
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!editNama.getText().toString().trim().isEmpty() &&
+                        !editCalendar.getText().toString().trim().isEmpty() &&
+                        jarak != null &&
+                        status != null &&
+                        absensi != null) {
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
 
-                //Post workshop
+                            DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
+                            AgendaTable agen = new AgendaTable();
+                            List<AgendaTable> list = db.agendaDao().getAgendaList();
+
+                            agen.setName(editNama.getText().toString());
+                            agen.setTanggal(editCalendar.getText().toString());
+                            agen.setJarak(jarak);
+                            agen.setStatus(status);
+                            agen.setMeeting(agenda);
+                            agen.setJabatan("Manager");
+                            agen.setAbsensi(absensi);
+                            agen.setKaryawan(false);
+
+                            if (checkBox.isChecked()) {
+                                agen.setReminder(true);
+                            } else {
+                                agen.setTime(0L);
+                                agen.setReminder(false);
+                            }
+
+                            db.agendaDao().insertAgenda(agen);
+                            addDataAgendaToFirestore(agen);
+
+                            for (int i = 0; i < list.size(); i++) {
+                                Log.e("Data", list.get(i).getName() + ", " + list.get(i).getTanggal() + ", " + list.get(i).getMeeting() + ", " + list.get(i).getJabatan() + ", " + list.get(i).getJarak() + ", " + list.get(i).getStatus() + ", " + list.get(i).getAbsensi());
+                            }
+                        }
+                    });
+
+
+                    Intent intent;
+                    intent = new Intent(CreateWorkshopFragment.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
     }
 
+
+    private void addDataAgendaToFirestore(AgendaTable agendaTable) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("agenda")
+                .document(agendaTable.getTanggal())
+                .set(agendaTable)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: berhasil tambah agenda");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
 
     private void agenda() {
         ArrayAdapter<String> dataAdapterAgenda = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, Bobot.workshop);

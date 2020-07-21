@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.scheduling_activity.ui.login.LoginApiActivity;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
 
@@ -32,7 +34,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 }else{
-                    Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    Intent i = new Intent(SplashScreenActivity.this, LoginApiActivity.class);
                     startActivity(i);
                     finish();
                 }

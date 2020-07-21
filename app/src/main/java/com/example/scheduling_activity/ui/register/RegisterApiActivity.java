@@ -1,5 +1,6 @@
 package com.example.scheduling_activity.ui.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scheduling_activity.Bobot;
 import com.example.scheduling_activity.R;
+import com.example.scheduling_activity.SplashScreenActivity;
+import com.example.scheduling_activity.ui.login.LoginApiActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +38,8 @@ public class RegisterApiActivity extends AppCompatActivity {
     private EditText edtEmail;
     private Button button1;
 
+    private String jabatan;
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -51,12 +57,14 @@ public class RegisterApiActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        setJabatan();
 
         button1.setOnClickListener(v -> register(edtEmail.getText().toString(),
-                editText3.getText().toString(),
                 editText6.getText().toString(),
+                jabatan,
                 edtNip.getText().toString(),
                 editText1.getText().toString()));
+
     }
 
     private void register(String email, String password, String jabatan, String nip, String nama) {
@@ -97,6 +105,9 @@ public class RegisterApiActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
+                        Intent i = new Intent(RegisterApiActivity.this, LoginApiActivity.class);
+                        startActivity(i);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -107,10 +118,22 @@ public class RegisterApiActivity extends AppCompatActivity {
                 });
     }
 
-    private void Jabatan() {
-        ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Bobot.jabatan);
+    private void setJabatan() {
+        String[] jabatans = new String[] {"Manager", "Karyawan"};
+        ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, jabatans);
         dataAdapterJabatan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJabatan.setAdapter(dataAdapterJabatan);
+        spinnerJabatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                jabatan = jabatans[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
