@@ -47,6 +47,7 @@
         tools:layout="@layout/fragment_pengajuan" />
 
     <fragment
+        android:name="com.example.scheduling_activity.ui.login.LogoutFragment"
         android:id="@+id/nav_logout"
         android:label="Logout"
         tools:layout="@layout/fragment_logout"/>

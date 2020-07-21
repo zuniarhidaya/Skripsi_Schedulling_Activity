@@ -33,16 +33,15 @@ public class SessionManager {
     public static final String ROLE = "role";
 
 
-
     // Constructor
-    public SessionManager(Context context){
+    public SessionManager(Context context) {
         this.context = context;
         PREF_NAME = context.getPackageName();
         pref = this.context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
 
-    public void createLoginSession(String nama, String jabatan, String nip){
+    public void createLoginSession(String nama, String jabatan, String nip) {
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_NAMA, nama);
         //editor.putString(KEY_EMAIL, email);
@@ -53,38 +52,42 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void checkLogin(){
+
+    public void checkLogin() {
         // Check login status
-        if(!this.isLoggedIn()){
+        if (!this.isLoggedIn()) {
             redirectOnLogout(LoginActivity.class);
         }
     }
 
 
-    public void logoutUser(){
+    public void logoutUser() {
         clearUserSettings();
         redirectOnLogout(LoginActivity.class);
     }
 
-    public void redirectOnLogout(Class loginActivity){
+    public void redirectOnLogout(Class loginActivity) {
 
         Intent i = new Intent(context, loginActivity);
 
         // clear stack and start new activity
+        editor.clear();
+        editor.commit();
+
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         context.startActivity(i);
     }
 
-    public void clearUserSettings(){
+    public void clearUserSettings() {
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.commit();
     }
 
     // Get Login State
-    public boolean isLoggedIn(){
+    public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
@@ -99,6 +102,7 @@ public class SessionManager {
     public String getName() {
         return pref.getString(KEY_NAMA, "");
     }
+
     public void setName(String nama) {
         editor.putString(KEY_NAMA, nama);
         editor.commit();
@@ -110,12 +114,14 @@ public class SessionManager {
 //        editor.commit();
 //    }
 
-    public String getJabatan(){ return pref.getString(KEY_JABATAN, ""); }
+    public String getJabatan() {
+        return pref.getString(KEY_JABATAN, "");
+    }
+
     public void setJabatan(String jabatan) {
         editor.putString(KEY_JABATAN, "");
         editor.commit();
     }
-
 
 
 //    public String getTelpon(){ return pref.getString(KEY_TELPON, ""); }
@@ -124,14 +130,20 @@ public class SessionManager {
 //        editor.commit();
 //    }
 
-    public String getNip(){ return pref.getString(KEY_NIP, ""); }
+    public String getNip() {
+        return pref.getString(KEY_NIP, "");
+    }
+
     public void setNip(String nip) {
         editor.putString(KEY_NIP, "");
         editor.commit();
     }
 
 
-    public boolean getStatusCriteria(){ return pref.getBoolean(KEY_IS_CRITERIA, false); }
+    public boolean getStatusCriteria() {
+        return pref.getBoolean(KEY_IS_CRITERIA, false);
+    }
+
     public void setDoneCriteria(boolean criteria) {
         editor.putBoolean(KEY_IS_CRITERIA, criteria);
         editor.commit();
