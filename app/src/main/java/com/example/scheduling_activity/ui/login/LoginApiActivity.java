@@ -85,7 +85,9 @@ public class LoginApiActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserModel user = documentSnapshot.toObject(UserModel.class);
-                if (user.getJabatan() == "Dosen"){
+                if (user.getJabatan().equals("Dosen")){
+
+                } else if (user.getJabatan().equals("Dosen")){
 
                 }
             }

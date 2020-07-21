@@ -3,12 +3,16 @@ package com.example.scheduling_activity.ui.register;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.scheduling_activity.Bobot;
 import com.example.scheduling_activity.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +29,7 @@ public class RegisterApiActivity extends AppCompatActivity {
     private EditText editText1;
     private EditText editText3;
     private EditText editText6;
+    private Spinner spinnerJabatan;
     private Button button1;
 
     private FirebaseAuth mAuth;
@@ -36,16 +41,18 @@ public class RegisterApiActivity extends AppCompatActivity {
         editText1 = (EditText) findViewById(R.id.editNama);
         editText3 = (EditText) findViewById(R.id.editJabatan);
         editText6 = (EditText) findViewById(R.id.editId);
+        spinnerJabatan = (Spinner) findViewById(R.id.spinnerRegis);
         button1 = (Button) findViewById(R.id.btnSimpan);
 
         mAuth = FirebaseAuth.getInstance();
 
+        Jabatan();
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register(editText1.getText().toString(),
-                        editText3.getText().toString(),
-                        editText6.getText().toString());
+                        editText6.getText().toString(),
+                        editText3.getText().toString());
             }
         });
     }
@@ -97,4 +104,12 @@ public class RegisterApiActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void Jabatan() {
+        ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Bobot.jabatan);
+        dataAdapterJabatan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerJabatan.setAdapter(dataAdapterJabatan);
+
+    }
+
 }

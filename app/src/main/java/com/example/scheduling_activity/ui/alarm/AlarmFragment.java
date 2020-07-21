@@ -14,24 +14,24 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.scheduling_activity.R;
 
-public class AlarmFragment extends Fragment {
+//public class AlarmFragment extends Fragment {
 
-    private AlarmViewModel alarmViewModel;
-    private Button start;
+//    private AlarmViewModel alarmViewModel;
+//    private Button start;
+//
+//    public View onCreateView(@NonNull LayoutInflater inflater,
+//                             ViewGroup container, Bundle savedInstanceState) {
+//        alarmViewModel =
+//                ViewModelProviders.of(this).get(AlarmViewModel.class);
+//        View root = inflater.inflate(R.layout.fragment_alarm, container, false);
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        alarmViewModel =
-                ViewModelProviders.of(this).get(AlarmViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_alarm, container, false);
+//        alarmViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//
+//            }
+//        });
+//        return root;
+//    }
 
-        alarmViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
-        });
-        return root;
-    }
-
-}
+//}
