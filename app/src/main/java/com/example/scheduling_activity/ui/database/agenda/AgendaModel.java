@@ -66,6 +66,22 @@ public class AgendaModel {
 
     }
 
+    public AgendaModel(String name, String meeting, String jabatan, String status, String jarak, String absensi, String tanggal, String hari, int awal, int akhir, boolean isReminder, Long time, boolean isKaryawan) {
+        this.name = name;
+        this.meeting = meeting;
+        this.jabatan = jabatan;
+        this.status = status;
+        this.jarak = jarak;
+        this.absensi = absensi;
+        this.tanggal = tanggal;
+        this.hari = hari;
+        this.awal = awal;
+        this.akhir = akhir;
+        this.isReminder = isReminder;
+        this.time = time;
+        this.isKaryawan = isKaryawan;
+    }
+
     public String getId() {
         return id;
     }

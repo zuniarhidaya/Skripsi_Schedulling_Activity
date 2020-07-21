@@ -150,7 +150,17 @@ public class CreateAssignActivity extends AppCompatActivity {
 
                             db.agendaDao().insertAgenda(agen);
 
-                            addDataAgendaToFirestore(agen);
+                            AgendaModel agendaModel = new AgendaModel();
+                            agen.setJabatan(jabatan);
+                            agen.setName(editNama.getText().toString());
+                            agen.setTanggal(editCalendar.getText().toString());
+                            agen.setJarak(jarak);
+                            agen.setMeeting(agenda);
+                            agen.setStatus(status);
+                            agen.setAbsensi(absensi);
+                            agen.setKaryawan(true);
+
+                            addDataAgendaToFirestore(agendaModel);
                             for (int i = 0; i < list.size(); i++) {
                                 Log.e("Data", list.get(i).getName() + ", " + list.get(i).getTanggal() + ", " + list.get(i).getMeeting() + ", " + list.get(i).getJabatan() + ", " + list.get(i).getJarak() + ", " + list.get(i).getStatus() + ", " + list.get(i).getAbsensi());
                             }
@@ -169,12 +179,13 @@ public class CreateAssignActivity extends AppCompatActivity {
         });
     }
 
-    private void addDataAgendaToFirestore(AgendaTable agendaTable) {
+    private void addDataAgendaToFirestore(AgendaModel agendaTable) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
+        Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
         db.collection("agenda")
-                .document(agendaTable.getTanggal())
+                .document(agendaTable.getId())
                 .set(agendaTable)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

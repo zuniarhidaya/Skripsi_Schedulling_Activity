@@ -135,7 +135,7 @@ public class CreateWorkshopFragment extends Fragment {
                         @Override
                         public void run() {
 
-                            DatabaseHelper db = DatabaseHelper.getInstance(getApplicationContext());
+                            DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
                             AgendaTable agen = new AgendaTable();
                             List<AgendaTable> list = db.agendaDao().getAgendaList();
 
@@ -165,9 +165,9 @@ public class CreateWorkshopFragment extends Fragment {
                     });
 
 
-                    Intent intent;
-                    intent = new Intent(CreateWorkshopFragment.this, MainActivity.class);
-                    startActivity(intent);
+//                    Intent intent;
+//                    intent = new Intent(MainActivity.this, MainActivity.class);
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(getContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                 }
