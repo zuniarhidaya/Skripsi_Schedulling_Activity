@@ -1,5 +1,6 @@
 package com.example.scheduling_activity.ui.workshop;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
+import com.example.scheduling_activity.ui.database.agenda.AgendaModel;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.manager.CreatePengajuanActivity;
 import com.example.scheduling_activity.ui.manager.ManagerViewModel;
@@ -156,7 +158,21 @@ public class CreateWorkshopFragment extends Fragment {
                             }
 
                             db.agendaDao().insertAgenda(agen);
-                            addDataAgendaToFirestore(agen);
+
+
+                            AgendaModel agendaModel = new AgendaModel();
+                            agendaModel.setJabatan("Manager");
+                            agendaModel.setName(editNama.getText().toString());
+                            agendaModel.setTanggal(editCalendar.getText().toString());
+                            agendaModel.setJarak(jarak);
+                            agendaModel.setMeeting(agenda);
+                            agendaModel.setStatus(status);
+                            agendaModel.setAbsensi(absensi);
+                            agendaModel.setKaryawan(false);
+                            addDataAgendaToFirestore(agendaModel);
+
+                            getActivity().runOnUiThread(() -> afterInsert());
+
 
                             for (int i = 0; i < list.size(); i++) {
                                 Log.e("Data", list.get(i).getName() + ", " + list.get(i).getTanggal() + ", " + list.get(i).getMeeting() + ", " + list.get(i).getJabatan() + ", " + list.get(i).getJarak() + ", " + list.get(i).getStatus() + ", " + list.get(i).getAbsensi());
@@ -164,25 +180,33 @@ public class CreateWorkshopFragment extends Fragment {
                         }
                     });
 
-
-//                    Intent intent;
-//                    intent = new Intent(MainActivity.this, MainActivity.class);
-//                    startActivity(intent);
                 } else {
                     Toast.makeText(getContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
     }
 
+    @SuppressLint("ShowToast")
+    private void afterInsert(){
+        editNama.setText("");
+        editCalendar.setText("");
+        jarak = null;
+        agenda = null;
+        status = null;
+        absensi = null;
 
-    private void addDataAgendaToFirestore(AgendaTable agendaTable) {
+        Toast.makeText(getContext(), "Workshop Sudah di tambah", Toast.LENGTH_SHORT);
+    }
+
+    private void addDataAgendaToFirestore(AgendaModel agendaTable) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
+        Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
         db.collection("agenda")
-                .document(agendaTable.getTanggal())
+                .document(agendaTable.getId())
                 .set(agendaTable)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -197,6 +221,8 @@ public class CreateWorkshopFragment extends Fragment {
                     }
                 });
     }
+
+
 
     private void agenda() {
         ArrayAdapter<String> dataAdapterAgenda = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, Bobot.workshop);
@@ -314,4 +340,6 @@ public class CreateWorkshopFragment extends Fragment {
 
         timePickerDialog.show();
     }
+
+
 }

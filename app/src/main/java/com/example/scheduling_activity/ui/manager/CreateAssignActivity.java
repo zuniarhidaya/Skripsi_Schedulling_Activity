@@ -151,14 +151,14 @@ public class CreateAssignActivity extends AppCompatActivity {
                             db.agendaDao().insertAgenda(agen);
 
                             AgendaModel agendaModel = new AgendaModel();
-                            agen.setJabatan(jabatan);
-                            agen.setName(editNama.getText().toString());
-                            agen.setTanggal(editCalendar.getText().toString());
-                            agen.setJarak(jarak);
-                            agen.setMeeting(agenda);
-                            agen.setStatus(status);
-                            agen.setAbsensi(absensi);
-                            agen.setKaryawan(true);
+                            agendaModel.setJabatan(jabatan);
+                            agendaModel.setName(editNama.getText().toString());
+                            agendaModel.setTanggal(editCalendar.getText().toString());
+                            agendaModel.setJarak(jarak);
+                            agendaModel.setMeeting(agenda);
+                            agendaModel.setStatus(status);
+                            agendaModel.setAbsensi(absensi);
+                            agendaModel.setKaryawan(true);
 
                             addDataAgendaToFirestore(agendaModel);
                             for (int i = 0; i < list.size(); i++) {

@@ -28,19 +28,13 @@ import com.example.scheduling_activity.topsis.Alternative;
 import com.example.scheduling_activity.topsis.Criteria;
 import com.example.scheduling_activity.topsis.Topsis;
 import com.example.scheduling_activity.topsis.TopsisIncompleteAlternativeDataException;
-import com.example.scheduling_activity.ui.database.AppExecutors;
-import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import com.example.scheduling_activity.ui.dss.DssAdapter;
 import com.example.scheduling_activity.ui.dss.Result;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -119,7 +113,7 @@ public class ManagerFragment extends Fragment {
 
                 masukTanggal.setText(tanggal2);
 
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+              /*  AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
@@ -133,10 +127,10 @@ public class ManagerFragment extends Fragment {
                             Log.e("Data Agenda", agenda.get(i).getName() + ", " + agenda.get(i).getAbsensi() + ", " + agenda.get(i).getMeeting());
                         }
 
-                        getActivity().runOnUiThread(ManagerFragment.this::testMobile);
+
 
                     }
-                });
+                });*/
 
 
             }
@@ -194,7 +188,7 @@ public class ManagerFragment extends Fragment {
             hasil.setName(agenda.getName());
             hasils.add(hasil);
         }
-        Log.e("HASIL", hasils.size()+"");
+        Log.e("HASIL", hasils.size() + "");
         for (int i = 0; i < hasils.size(); i++) {
             Log.e("Data Hasil", hasils.get(i).getName() + ", " +
                     hasils.get(i).getTanggal() + ", " +
@@ -217,7 +211,7 @@ public class ManagerFragment extends Fragment {
             Topsis topsis = new Topsis();
 
             for (int i = 0; i < hasils.size(); i++) {
-                Log.e("TRACK", i+1+"");
+                Log.e("TRACK", i + 1 + "");
 
                 Alternative agenda = new Alternative(hasils.get(i).getName());
                 agenda.addCriteriaValue(criteriaJarak, hasils.get(i).getJarak());
@@ -246,14 +240,13 @@ public class ManagerFragment extends Fragment {
     }
 
     private void printDetailedResults(Topsis topsis) {
-
         ArrayList<Result> results = new ArrayList<>();
 
         for (Alternative alternative : topsis.getAlternatives()) {
 
             Result result = new Result();
             result.setName(alternative.getName());
-            result.setScore(alternative.getCalculatedPerformanceScore()+"");
+            result.setScore(alternative.getCalculatedPerformanceScore() + "");
             results.add(result);
         }
 
@@ -261,18 +254,16 @@ public class ManagerFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(dssAdapter);
-
     }
 
-    private void getDataAgenda(){
+    private void getDataAgenda() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("agenda")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
                                 AgendaTable agenda = new AgendaTable();
                                 agenda.setAbsensi(document.getData().get("name").toString());
                                 agenda.setMeeting(document.getData().get("meeting").toString());
@@ -280,18 +271,19 @@ public class ManagerFragment extends Fragment {
                                 agenda.setJarak(document.getData().get("jarak").toString());
                                 agenda.setStatus(document.getData().get("status").toString());
                                 agenda.setTanggal(document.getData().get("tanggal").toString());
-                                agenda.setHari(document.getData().get("hari").toString());
-                                agenda.setAwal(Integer.valueOf(document.getData().get("awal").toString()));
-                                agenda.setAkhir(Integer.valueOf(document.getData().get("akhir").toString()));
+//                                agenda.setHari(document.getData().get("hari").toString());
+                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
+                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
                                 agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
-                                agenda.setKaryawan(Boolean.valueOf(document.getData().get("karyawan").toString()));
-                                agenda.setReminder(Boolean.valueOf(document.getData().get("reminder").toString()));
+                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                agendas.add(agenda);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-
                             }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
                         }
+                        getActivity().runOnUiThread(ManagerFragment.this::testMobile);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
                     }
                 });
     }

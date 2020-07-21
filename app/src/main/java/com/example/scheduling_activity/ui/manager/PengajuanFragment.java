@@ -35,6 +35,8 @@ import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import com.example.scheduling_activity.ui.dss.DssAdapter;
 import com.example.scheduling_activity.ui.dss.Result;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +44,7 @@ import java.util.List;
 
 public class PengajuanFragment extends Fragment {
 
+    private static final String TAG = "PengajuanFragment";
     private PengajuanViewModel pengajuanViewModel;
     private EditText masukTanggal;
     private String tanggal;
@@ -82,6 +85,8 @@ public class PengajuanFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        getDataAgenda();
 
         ans1 = (TextView) view.findViewById(R.id.ans_1);
         ans2 = (TextView) view.findViewById(R.id.ans_2);
@@ -184,7 +189,7 @@ public class PengajuanFragment extends Fragment {
             hasil.setName(agenda.getName());
             hasils.add(hasil);
         }
-        Log.e("HASIL", hasils.size()+"");
+        Log.e("HASIL", hasils.size() + "");
         for (int i = 0; i < hasils.size(); i++) {
             Log.e("Data Hasil", hasils.get(i).getName() + ", " +
                     hasils.get(i).getTanggal() + ", " +
@@ -207,7 +212,7 @@ public class PengajuanFragment extends Fragment {
             Topsis topsis = new Topsis();
 
             for (int i = 0; i < hasils.size(); i++) {
-                Log.e("TRACK", i+1+"");
+                Log.e("TRACK", i + 1 + "");
 
                 Alternative agenda = new Alternative(hasils.get(i).getName());
                 agenda.addCriteriaValue(criteriaJarak, hasils.get(i).getJarak());
@@ -243,7 +248,7 @@ public class PengajuanFragment extends Fragment {
 
             Result result = new Result();
             result.setName(alternative.getName());
-            result.setScore(alternative.getCalculatedPerformanceScore()+"");
+            result.setScore(alternative.getCalculatedPerformanceScore() + "");
             results.add(result);
         }
 
@@ -252,5 +257,37 @@ public class PengajuanFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(dssAdapter);
 
+    }
+
+    private void getDataAgenda() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("agenda")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (!Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
+                                AgendaTable agenda = new AgendaTable();
+                                agenda.setAbsensi(document.getData().get("name").toString());
+                                agenda.setMeeting(document.getData().get("meeting").toString());
+                                agenda.setJabatan(document.getData().get("jabatan").toString());
+                                agenda.setJarak(document.getData().get("jarak").toString());
+                                agenda.setStatus(document.getData().get("status").toString());
+                                agenda.setTanggal(document.getData().get("tanggal").toString());
+//                                agenda.setHari(document.getData().get("hari").toString());
+                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
+                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                agendas.add(agenda);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        }
+                        getActivity().runOnUiThread(PengajuanFragment.this::testMobile);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
     }
 }
