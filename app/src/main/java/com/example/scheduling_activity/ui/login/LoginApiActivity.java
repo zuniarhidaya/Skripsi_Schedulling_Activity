@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scheduling_activity.R;
+import com.example.scheduling_activity.SessionManager;
 import com.example.scheduling_activity.ui.register.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,7 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginApiActivity extends AppCompatActivity {
 
@@ -54,7 +54,7 @@ public class LoginApiActivity extends AppCompatActivity {
 
     }
 
-    private void login(String email, String password){
+    private void login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -78,16 +78,21 @@ public class LoginApiActivity extends AppCompatActivity {
                 });
     }
 
-    private void getUserData(String userID){
+    private void getUserData(String userID) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(userID);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserModel user = documentSnapshot.toObject(UserModel.class);
-                if (user.getJabatan() == "Dosen"){
 
-                }
+                SessionManager sessionManager = new SessionManager(LoginApiActivity.this);
+
+                sessionManager.createLoginSession(
+                        user.getNama(),
+                        user.getJabatan(),
+                        user.getNip()
+                );
             }
         });
     }

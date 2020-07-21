@@ -39,4 +39,10 @@
         android:name="com.example.scheduling_activity.ui.manager.PengajuanFragment"
         android:label="Pengajuan Workshop"
         tools:layout="@layout/fragment_pengajuan" />
+
+    <fragment
+        android:id="@+id/nav_workshop"
+        android:name="com.example.scheduling_activity.ui.workshop.CreateWorkshopFragment"
+        android:label="Pengajuan Workshop"
+        tools:layout="@layout/fragment_pengajuan" />
 </navigation>

@@ -1,7 +1,6 @@
 package com.example.scheduling_activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -15,8 +14,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.scheduling_activity.ui.detail.DetailKegiatan;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -41,10 +38,24 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_profile,
-                R.id.nav_home, R.id.nav_dss, R.id.nav_manager, R.id.nav_pengajuan)
-                .setDrawerLayout(drawer)
-                .build();
+
+
+        SessionManager sessionManager = new SessionManager(this);
+
+        String jabatan = sessionManager.getJabatan();
+
+        if (jabatan.equals("Karyawan")) {
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_profile,
+                    R.id.nav_home, R.id.nav_dss, R.id.nav_workshop)
+                    .setDrawerLayout(drawer)
+                    .build();
+        } else {
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_profile,
+                    R.id.nav_home, R.id.nav_dss, R.id.nav_manager, R.id.nav_pengajuan)
+                    .setDrawerLayout(drawer)
+                    .build();
+        }
+
 
         final SessionManager session = new SessionManager(getApplicationContext());
 
