@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "123492835757",
+    "firebase_url": "https://scheduling-activity.firebaseio.com",
+    "project_id": "scheduling-activity",
+    "storage_bucket": "scheduling-activity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123492835757:android:5d33e58bf124e36d6fc124",
+        "android_client_info": {
+          "package_name": "com.example.scheduling_activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123492835757-tb9hrke74ecd00875omkbe6aed6m3h16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJPDhHX28mvZuEFS81uLbk3iZp_JyZ_n4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123492835757-tb9hrke74ecd00875omkbe6aed6m3h16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

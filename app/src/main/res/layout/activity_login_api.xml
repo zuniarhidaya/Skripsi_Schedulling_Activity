@@ -1,9 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_polos_fix"
+    android:orientation="vertical"
     tools:context=".ui.login.LoginApiActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/TransWhite"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="60dp">
+
+            <ImageView
+                android:id="@+id/welkam"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_splash_screen" />
+
+            <TextView
+                android:id="@+id/teks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welkam"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="30dp"
+                android:text="@string/teks"
+                android:textAlignment="center"
+                android:textColor="@color/White"
+                android:textSize="20sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/teks"
+                android:hint="Username"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:id="@+id/editUsername"/>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editUsername"
+                android:textColor="#fff"
+                android:hint="Password"
+                android:textColorHint="#fff"
+                android:id="@+id/editPassword"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                android:layout_marginTop="40dp"
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/editPassword"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_button"
+                android:text="Login" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                android:layout_marginTop="40dp"
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/login"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_button"
+                android:text="Register" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

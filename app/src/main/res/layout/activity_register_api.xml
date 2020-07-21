@@ -1,9 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_polos_fix"
     tools:context=".ui.register.RegisterApiActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="25dp"
+        android:background="@color/TransWhite">
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Transparant"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/profiling"
+                android:textColor="#fff"
+                android:textSize="36sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/linearLayout1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-10dp"
+            android:rotation="45" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp">
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/icon1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#6fa8dc"
+                    android:src="@drawable/nama_01" />
+
+                <EditText
+                    android:padding="10dp"
+                    android:id="@+id/editNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/icon1"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/icon1"
+                    android:background="@color/WhiteSmoke"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext"
+                    android:paddingStart="10dp" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editNama"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/icon3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="#6fa8dc"
+                        android:src="@drawable/jabatan_01"/>
+
+<!--                    <EditText-->
+<!--                        android:padding="10dp"-->
+<!--                        android:id="@+id/editJabatan"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignBottom="@+id/icon3"-->
+<!--                        android:layout_alignParentTop="true"-->
+<!--                        android:layout_toRightOf="@id/icon3"-->
+<!--                        android:background="@color/WhiteSmoke"-->
+<!--                        android:hint="@string/jabatan"-->
+<!--                        android:imeOptions="actionNext"-->
+<!--                        android:inputType="textLongMessage"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:paddingStart="10dp" />-->
+
+                    <Spinner
+                        android:id="@+id/spinnerRegis"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBottom="@+id/icon3"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/WhiteSmoke"
+                        android:layout_toRightOf="@id/icon3"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center_horizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/spinnerRegis"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/icon6"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="#6fa8dc"
+                            android:src="@drawable/nomor_pegawai_01"/>
+
+                        <EditText
+                            android:id="@+id/editId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/icon6"
+                            android:layout_alignParentTop="true"
+                            android:layout_toRightOf="@id/icon6"
+                            android:background="@color/WhiteSmoke"
+                            android:hint="Password"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingStart="10dp" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_regis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <Button
+            android:background="@drawable/bg_button"
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/simpan"
+            android:textColor="#000"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+</RelativeLayout>
