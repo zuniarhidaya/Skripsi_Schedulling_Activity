@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (jabatan.equals("Karyawan")) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_profile,
-                    R.id.nav_home, R.id.nav_dss, R.id.nav_workshop)
+                    R.id.nav_home, R.id.nav_dss, R.id.nav_workshop, R.id.logout)
                     .setDrawerLayout(drawer)
                     .build();
         } else {
             mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_profile,
-                    R.id.nav_home, R.id.nav_dss, R.id.nav_manager, R.id.nav_pengajuan)
+                    R.id.nav_home, R.id.nav_dss, R.id.nav_manager, R.id.nav_pengajuan, R.id.logout)
                     .setDrawerLayout(drawer)
                     .build();
         }
