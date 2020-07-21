@@ -39,12 +39,14 @@ import java.util.List;
 public class DssFragment extends Fragment {
 
     private DssViewModel dssViewModel;
+
     private EditText masukTanggal;
     private String tanggal;
     private TextView ans1;
     private TextView ans2;
     private TextView ans3;
     private TextView ans4;
+
     private RecyclerView recyclerView;
     private List<CriteriaTable> label = new ArrayList<>();
     private List<AgendaTable> agendas = new ArrayList<>();
@@ -75,14 +77,7 @@ public class DssFragment extends Fragment {
         //ans4 = (TextView) view.findViewById(R.id.ans_4);
         recyclerView = view.findViewById(R.id.rv_hasil);
         masukTanggal = (EditText) view.findViewById(R.id.masukTanggal);
-        masukTanggal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCalendar();
-            }
-        });
-
-
+        masukTanggal.setOnClickListener(v -> showCalendar());
     }
 
     public void testMobile() {
@@ -130,7 +125,7 @@ public class DssFragment extends Fragment {
             hasil.setName(agenda.getName());
             hasils.add(hasil);
         }
-        Log.e("HASIL", hasils.size()+"");
+        Log.e("HASIL", hasils.size() + "");
         for (int i = 0; i < hasils.size(); i++) {
             Log.e("Data Hasil", hasils.get(i).getName() + ", " +
                     hasils.get(i).getTanggal() + ", " +
@@ -153,7 +148,7 @@ public class DssFragment extends Fragment {
             Topsis topsis = new Topsis();
 
             for (int i = 0; i < hasils.size(); i++) {
-                Log.e("TRACK", i+1+"");
+                Log.e("TRACK", i + 1 + "");
 
                 Alternative agenda = new Alternative(hasils.get(i).getName());
                 agenda.addCriteriaValue(criteriaJarak, hasils.get(i).getJarak());
@@ -190,7 +185,7 @@ public class DssFragment extends Fragment {
 
             Result result = new Result();
             result.setName(alternative.getName());
-            result.setScore(alternative.getCalculatedPerformanceScore()+"");
+            result.setScore(alternative.getCalculatedPerformanceScore() + "");
             results.add(result);
         }
 
@@ -225,7 +220,7 @@ public class DssFragment extends Fragment {
                         DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
                         List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
                         List<AgendaTable> agenda = db.agendaDao().filterDate(tanggal);
-                        
+
                         label.addAll(list);
                         agendas.addAll(agenda);
 
