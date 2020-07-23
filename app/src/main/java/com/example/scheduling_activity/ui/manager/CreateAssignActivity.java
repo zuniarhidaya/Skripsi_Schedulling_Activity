@@ -35,9 +35,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +58,8 @@ public class CreateAssignActivity extends AppCompatActivity {
     private Spinner spinnerJarak;
     private Spinner spinnerStatus;
     private Spinner spinnerAbsensi;
+
+    private Spinner spinnerKaryawan;
     private Button button1;
 
     private String agenda;
@@ -65,7 +70,10 @@ public class CreateAssignActivity extends AppCompatActivity {
     private String tanggal;
     private String waktu;
     private String waktuAkhir;
+    private String karyawan;
+    private String idKaryawan;
 
+    private List<UserModel> userModelList = new ArrayList<>();
     private CheckBox checkBox;
 
     @Override
@@ -82,6 +90,9 @@ public class CreateAssignActivity extends AppCompatActivity {
         spinnerJarak = (Spinner) findViewById(R.id.spinnerJarak);
         spinnerStatus = (Spinner) findViewById(R.id.spinnerStatus);
         spinnerAbsensi = (Spinner) findViewById(R.id.spinnerAbsensi);
+
+        spinnerKaryawan = findViewById(R.id.spinnerNamaKaryawan);
+
         button1 = (Button) findViewById(R.id.btnSimpan);
         checkBox = (CheckBox) findViewById(R.id.cb_set_reminder);
 
@@ -90,6 +101,8 @@ public class CreateAssignActivity extends AppCompatActivity {
         status();
         jarak();
         absensi();
+
+        getDataKaryawan();
 
         editCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +174,8 @@ public class CreateAssignActivity extends AppCompatActivity {
                             agendaModel.setKaryawan(true);
 
                             addDataAgendaToFirestore(agendaModel);
+                            addDataAgendaKaryawanToFirestore(agendaModel);
+
                             for (int i = 0; i < list.size(); i++) {
                                 Log.e("Data", list.get(i).getName() + ", " + list.get(i).getTanggal() + ", " + list.get(i).getMeeting() + ", " + list.get(i).getJabatan() + ", " + list.get(i).getJarak() + ", " + list.get(i).getStatus() + ", " + list.get(i).getAbsensi());
                             }
@@ -196,6 +211,57 @@ public class CreateAssignActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    private void addDataAgendaKaryawanToFirestore(AgendaModel agendaTable) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
+        db.collection(idKaryawan)
+                .document(agendaTable.getId())
+                .set(agendaTable)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: berhasil tambah agenda karyawan");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document karyawan", e);
+                    }
+                });
+    }
+
+    private void getDataKaryawan() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document.getData().get("jabatan").toString().equals("Karyawan")) {
+                                UserModel user = new UserModel();
+
+                                user.setUserID(document.getData().get("userID").toString());
+                                user.setEmail(document.getData().get("email").toString());
+                                user.setPassword(document.getData().get("password").toString());
+                                user.setJabatan(document.getData().get("jabatan").toString());
+                                user.setNip(document.getData().get("nip").toString());
+                                user.setNama(document.getData().get("nama").toString());
+
+                                userModelList.add(user);
+                                Log.d(TAG, "getDataKaryawan: " + userModelList);
+                            }
+                        }
+
+                                setSpinnerKaryawan(userModelList);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
                     }
                 });
     }
@@ -370,6 +436,29 @@ public class CreateAssignActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 absensi = Bobot.absensi[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setSpinnerKaryawan(List<UserModel> userList) {
+        List<String> namaKaryawanList = new ArrayList<>();
+        for (UserModel user : userList){
+            namaKaryawanList.add(user.getNama());
+        }
+        ArrayAdapter<String> dataAdapterKaryawan = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, namaKaryawanList);
+        dataAdapterKaryawan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKaryawan.setAdapter(dataAdapterKaryawan);
+        spinnerKaryawan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                karyawan = userList.get(position).getNama();
+                idKaryawan = userList.get(position).getUserID();
+                Log.d(TAG, "onItemSelected: " + idKaryawan);
             }
 
             @Override

@@ -227,7 +227,31 @@
                     android:gravity="center_horizontal" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Pilih Karyawan :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/spinnerNamaKaryawan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:buttonTint="@color/White"
                 android:id="@+id/cb_set_reminder"
@@ -240,14 +264,14 @@
                 android:textColorHighlight="@color/White" />
 
             <Button
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
                 android:id="@+id/btnSimpan"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_button"

@@ -33,6 +33,8 @@ import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import com.example.scheduling_activity.ui.dss.DssAdapter;
 import com.example.scheduling_activity.ui.dss.Result;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -54,6 +56,7 @@ public class ManagerFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<CriteriaTable> label = new ArrayList<>();
     private List<AgendaTable> agendas = new ArrayList<>();
+    private List<AgendaTable> agendaKaryawan = new ArrayList<>();
     private List<HasilKonversi> hasils = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -278,6 +281,41 @@ public class ManagerFragment extends Fragment {
                                 agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                 agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
                                 agendas.add(agenda);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        }
+                        getActivity().runOnUiThread(ManagerFragment.this::testMobile);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void getDataAgendaKaryawan() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        db.collection(user.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
+                                AgendaTable agenda = new AgendaTable();
+                                agenda.setAbsensi(document.getData().get("name").toString());
+                                agenda.setMeeting(document.getData().get("meeting").toString());
+                                agenda.setJabatan(document.getData().get("jabatan").toString());
+                                agenda.setJarak(document.getData().get("jarak").toString());
+                                agenda.setStatus(document.getData().get("status").toString());
+                                agenda.setTanggal(document.getData().get("tanggal").toString());
+//                                agenda.setHari(document.getData().get("hari").toString());
+                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
+                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                agendaKaryawan.add(agenda);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                             }
                         }
