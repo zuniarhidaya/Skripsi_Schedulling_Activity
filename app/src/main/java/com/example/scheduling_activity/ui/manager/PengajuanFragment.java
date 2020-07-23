@@ -86,7 +86,16 @@ public class PengajuanFragment extends Fragment {
             }
         });
 
-        getDataAgenda();
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        String dateNow = day + "-" + month + "-" + year;
+
+
+        getDataAgenda(dateNow);
+
 
         ans1 = (TextView) view.findViewById(R.id.ans_1);
         ans2 = (TextView) view.findViewById(R.id.ans_2);
@@ -106,6 +115,8 @@ public class PengajuanFragment extends Fragment {
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+
+
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
@@ -113,25 +124,8 @@ public class PengajuanFragment extends Fragment {
                 String tanggal2 = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
 
                 masukTanggal.setText(tanggal2);
+                getDataAgenda(tanggal2);
 
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
-                        List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
-                        List<AgendaTable> agenda = db.agendaDao().filterWorkshop(tanggal);
-
-                        label.addAll(list);
-                        agendas.addAll(agenda);
-
-                        for (int i = 0; i < agenda.size(); i++) {
-                            Log.e("Data Agenda", agenda.get(i).getName() + ", " + agenda.get(i).getAbsensi() + ", " + agenda.get(i).getMeeting());
-                        }
-
-                        getActivity().runOnUiThread(PengajuanFragment.this::testMobile);
-
-                    }
-                });
 
 
             }
@@ -259,7 +253,7 @@ public class PengajuanFragment extends Fragment {
 
     }
 
-    private void getDataAgenda() {
+    private void getDataAgenda(String date) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("agenda")
                 .get()
@@ -267,22 +261,24 @@ public class PengajuanFragment extends Fragment {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (!Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
-                                AgendaTable agenda = new AgendaTable();
-                                agenda.setName(document.getData().get("name").toString());
-                                agenda.setAbsensi(document.getData().get("absensi").toString());
-                                agenda.setMeeting(document.getData().get("meeting").toString());
-                                agenda.setJabatan(document.getData().get("jabatan").toString());
-                                agenda.setJarak(document.getData().get("jarak").toString());
-                                agenda.setStatus(document.getData().get("status").toString());
-                                agenda.setTanggal(document.getData().get("tanggal").toString());
+                                if(document.getData().get("tanggal").toString().equals(date)) {
+                                    AgendaTable agenda = new AgendaTable();
+                                    agenda.setName(document.getData().get("name").toString());
+                                    agenda.setAbsensi(document.getData().get("absensi").toString());
+                                    agenda.setMeeting(document.getData().get("meeting").toString());
+                                    agenda.setJabatan(document.getData().get("jabatan").toString());
+                                    agenda.setJarak(document.getData().get("jarak").toString());
+                                    agenda.setStatus(document.getData().get("status").toString());
+                                    agenda.setTanggal(document.getData().get("tanggal").toString());
 //                                agenda.setHari(document.getData().get("hari").toString());
-                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
-                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
-                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
-                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
-                                agendas.add(agenda);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                    agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
+                                    agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                    agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                    agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                    agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                    agendas.add(agenda);
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
                             }
                         }
                         getActivity().runOnUiThread(PengajuanFragment.this::testMobile);

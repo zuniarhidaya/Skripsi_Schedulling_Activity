@@ -1,112 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dss.DssFragment">
+    tools:context=".ui.manager.ManagerFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:background="@color/DarkOrange"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="25dp"
+            android:background="#CC76E4"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Pilih Tanggal untuk skoring agenda"
-                android:textColor="@color/hitam"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/masukTanggal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:hint="Masukkan Tanggal"
-                android:maxLines="1" />
-        </LinearLayout>
+                android:layout_marginTop="30dp"
+                android:text="Detail Assign"
+                android:textColor="@color/White"
+                android:textSize="36sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <EditText
+                android:id="@+id/editNama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:gravity="center_horizontal"
+                android:hint="Nama Agenda"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/text_1"
+            <EditText
+                android:id="@+id/editCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:hint="Pilih Tanggal"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <EditText
+                    android:id="@+id/editMulai"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:focusable="false"
+                    android:hint="Waktu Mulai"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/editAkhir"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:focusable="false"
+                    android:hint="Waktu Selesai"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Jenis Agenda :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerAgenda"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:text="Jabatan Client :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerJabatan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Jarak Agenda Anda : "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerJarak"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Status Pertemuan :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/spinnerStatus"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Absensi untuk Kantor :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/spinnerAbsensi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Pilih Karyawan :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/spinnerNamaKaryawan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:buttonTint="@color/White"
+                android:id="@+id/cb_set_reminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Rekomendasi Agenda : "
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="Tambah Pengingat"
+                android:textColor="@color/White"
+                android:textColorHighlight="@color/White" />
 
-            <TextView
-                android:id="@+id/ans_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:hint="answer 1"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text_2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:text="Total Skor Kriteria : "
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/ans_2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:hint="answer 2"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Hasil Perangkingan Agenda :"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+            <Button
+                android:id="@+id/btnSimpan"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_button"
+                android:padding="5dp"
+                android:text="Simpan"
+                android:textColor="@color/hitam" />
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_hasil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/assign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add_white_24dp" />
-
-</RelativeLayout>
+</ScrollView>

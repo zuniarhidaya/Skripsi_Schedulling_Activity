@@ -27,6 +27,7 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:focusable="false"
                 android:id="@+id/masukTanggal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

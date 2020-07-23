@@ -76,7 +76,6 @@ public class LoginApiActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             Toast.makeText(LoginApiActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             getUserData(user.getUid());
@@ -98,8 +97,6 @@ public class LoginApiActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserModel user = documentSnapshot.toObject(UserModel.class);
-
-
                 SessionManager sessionManager = new SessionManager(LoginApiActivity.this);
 
                 sessionManager.createLoginSession(

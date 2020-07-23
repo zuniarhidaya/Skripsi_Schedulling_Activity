@@ -1,6 +1,5 @@
 package com.example.scheduling_activity.ui.home;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,13 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.scheduling_activity.HasilKonversi;
 import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.SessionManager;
-import com.example.scheduling_activity.ui.database.AppExecutors;
-import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
-import com.example.scheduling_activity.ui.detail.DetailKegiatan;
-import com.example.scheduling_activity.ui.manager.PengajuanFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -102,78 +98,32 @@ public class HomeFragment extends Fragment {
 
         //Pilih Tanggal filter tanggal
 
-
-
-
         //Dafault hari ini (pertama kali buka)
 
         SessionManager sessionManager = new SessionManager(getContext());
 
         String jabatan = sessionManager.getJabatan();
-        if(jabatan.equals("Karyawan")){
-            getDataAgenda();
-
-
-        }else{
+        if (jabatan.equals("Karyawan")) {
+            getDataAgendaKaryawan(dateNow);
             calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
                 public void onSelectedDayChange(@NonNull CalendarView view, int years, int months, int dayOfMonths) {
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            agendas.clear();
-                            int monthPlusOne = months + 1;
-                            String pickedDate = dayOfMonths + "-" + monthPlusOne + "-" + years;
+                    agendas.clear();
+                    int monthPlusOne = months + 1;
+                    String pickedDate = dayOfMonths + "-" + monthPlusOne + "-" + years;
+                    getDataAgendaKaryawan(pickedDate);
 
-                            DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
-                            List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
-                            List<AgendaTable> agenda = db.agendaDao().filterDate(pickedDate);
-
-                            label.addAll(list);
-                            agendas.addAll(agenda);
-
-                            getActivity().runOnUiThread(() -> {
-                                HomeAdapter homeAdapter = new HomeAdapter(getContext(), agenda);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                                recyclerView.setAdapter(homeAdapter);
-
-                                tanggalAgenda.setText(pickedDate);
-                            });
-                        }
-                    });
                 }
             });
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+        } else {
+            getDataAgenda(dateNow);
+            calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
-                public void run() {
-                    DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
-                    List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
-                    List<AgendaTable> agenda = db.agendaDao().filterDate(dateNow);
-
-                    label.addAll(list);
-                    agendas.addAll(agenda);
-
-                    HomeAdapter homeAdapter = new HomeAdapter(getContext(), agenda);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(homeAdapter);
-
-
-                /*for (int i = 0; i < list.size(); i++) {
-                    Log.e("Data Label", list.get(i).getName() + ", " + list.get(i).getValue() + ", " + list.get(i).getNilai());
-                    String tanggalAgenda = agenda.get(i).getTanggal();
-                    String[] dates = tanggalAgenda.split("-");
-                    int year = Integer.parseInt(dates[0]);
-                    int month = Integer.parseInt(dates[1]);
-                    int day = Integer.parseInt(dates[2]);
-
-
-
-                    *//*calendarView.markDate(
-                            new DateData(year, month, day).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.GREEN))
-                    );*//*
-                }*/
+                public void onSelectedDayChange(@NonNull CalendarView view, int years, int months, int dayOfMonths) {
+                    agendas.clear();
+                    int monthPlusOne = months + 1;
+                    String pickedDate = dayOfMonths + "-" + monthPlusOne + "-" + years;
+                    getDataAgenda(pickedDate);
                 }
             });
         }
@@ -181,7 +131,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void getDataAgenda() {
+    private void getDataAgenda(String date) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("agenda")
                 .get()
@@ -189,22 +139,24 @@ public class HomeFragment extends Fragment {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
-                                AgendaTable agenda = new AgendaTable();
-                                agenda.setName(document.getData().get("name").toString());
-                                agenda.setAbsensi(document.getData().get("absensi").toString());
-                                agenda.setMeeting(document.getData().get("meeting").toString());
-                                agenda.setJabatan(document.getData().get("jabatan").toString());
-                                agenda.setJarak(document.getData().get("jarak").toString());
-                                agenda.setStatus(document.getData().get("status").toString());
-                                agenda.setTanggal(document.getData().get("tanggal").toString());
+                                if (document.getData().get("tanggal").toString().equals(date)) {
+                                    AgendaTable agenda = new AgendaTable();
+                                    agenda.setName(document.getData().get("name").toString());
+                                    agenda.setAbsensi(document.getData().get("absensi").toString());
+                                    agenda.setMeeting(document.getData().get("meeting").toString());
+                                    agenda.setJabatan(document.getData().get("jabatan").toString());
+                                    agenda.setJarak(document.getData().get("jarak").toString());
+                                    agenda.setStatus(document.getData().get("status").toString());
+                                    agenda.setTanggal(document.getData().get("tanggal").toString());
 //                                agenda.setHari(document.getData().get("hari").toString());
-                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
-                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
-                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
-                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
-                                agendas.add(agenda);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                    agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
+                                    agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                    agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                    agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                    agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                    agendas.add(agenda);
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
                             }
                         }
                         HomeAdapter homeAdapter = new HomeAdapter(getContext(), agendas);
@@ -213,6 +165,45 @@ public class HomeFragment extends Fragment {
                         recyclerView.setAdapter(homeAdapter);
 
                         //getActivity().runOnUiThread(PengajuanFragment.this::testMobile);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void getDataAgendaKaryawan(String date) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        db.collection(user.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
+                                if (document.getData().get("tanggal").toString().equals(date)) {
+                                    AgendaTable agenda = new AgendaTable();
+                                    agenda.setName(document.getData().get("name").toString());
+                                    agenda.setMeeting(document.getData().get("meeting").toString());
+                                    agenda.setJabatan(document.getData().get("jabatan").toString());
+                                    agenda.setAbsensi(document.getData().get("absensi").toString());
+                                    agenda.setJarak(document.getData().get("jarak").toString());
+                                    agenda.setStatus(document.getData().get("status").toString());
+                                    agenda.setTanggal(document.getData().get("tanggal").toString());
+//                                agenda.setHari(document.getData().get("hari").toString());
+                                    agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
+                                    agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                    agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                    agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                    agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                    agendas.add(agenda);
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                            }
+                        }
+                        HomeAdapter homeAdapter = new HomeAdapter(getContext(), agendas);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(homeAdapter);
                     } else {
                         Log.w(TAG, "Error getting documents.", task.getException());
                     }

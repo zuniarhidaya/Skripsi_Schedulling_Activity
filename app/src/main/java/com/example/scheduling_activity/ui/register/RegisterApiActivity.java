@@ -77,7 +77,6 @@ public class RegisterApiActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
-
                             UserModel userModel =
                                     new UserModel(
                                             user.getUid(),

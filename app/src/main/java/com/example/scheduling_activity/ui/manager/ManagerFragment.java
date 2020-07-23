@@ -1,40 +1,34 @@
 package com.example.scheduling_activity.ui.manager;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scheduling_activity.Bobot;
-import com.example.scheduling_activity.HasilKonversi;
 import com.example.scheduling_activity.R;
-import com.example.scheduling_activity.topsis.Alternative;
-import com.example.scheduling_activity.topsis.Criteria;
-import com.example.scheduling_activity.topsis.Topsis;
-import com.example.scheduling_activity.topsis.TopsisIncompleteAlternativeDataException;
-import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
-import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
-import com.example.scheduling_activity.ui.dss.DssAdapter;
-import com.example.scheduling_activity.ui.dss.Result;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.scheduling_activity.ui.database.agenda.AgendaModel;
+import com.example.scheduling_activity.ui.register.UserModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -46,18 +40,33 @@ public class ManagerFragment extends Fragment {
     private static final String TAG = "ManagerFragment";
 
     private ManagerViewModel managerViewModel;
-    private EditText masukTanggal;
-    private String tanggal;
-    private TextView ans1;
-    private TextView ans2;
-    private TextView ans3;
-    private TextView ans4;
 
-    private RecyclerView recyclerView;
-    private List<CriteriaTable> label = new ArrayList<>();
-    private List<AgendaTable> agendas = new ArrayList<>();
-    private List<AgendaTable> agendaKaryawan = new ArrayList<>();
-    private List<HasilKonversi> hasils = new ArrayList<>();
+    private EditText editNama;
+    private EditText editCalendar;
+    private EditText editMulai;
+    private EditText editSelesai;
+    private Spinner spinnerAgenda;
+    private Spinner spinnerJabatan;
+    private Spinner spinnerJarak;
+    private Spinner spinnerStatus;
+    private Spinner spinnerAbsensi;
+
+    private Spinner spinnerKaryawan;
+    private Button button1;
+
+    private String agenda;
+    private String jarak;
+    private String jabatan;
+    private String status;
+    private String absensi;
+    private String tanggal;
+    private String waktu;
+    private String waktuAkhir;
+    private String karyawan;
+    private String idKaryawan;
+
+    private List<UserModel> userModelList = new ArrayList<>();
+    private CheckBox checkBox;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -78,28 +87,261 @@ public class ManagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FloatingActionButton fab = view.findViewById(R.id.assign);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), CreateAssignActivity.class);
-                startActivity(i);
-            }
-        });
+        editNama = (EditText) view.findViewById(R.id.editNama);
+        editCalendar = (EditText) view.findViewById(R.id.editCalendar);
+        editMulai = (EditText) view.findViewById(R.id.editMulai);
+        editSelesai = (EditText) view.findViewById(R.id.editAkhir);
+        spinnerAgenda = (Spinner) view.findViewById(R.id.spinnerAgenda);
+        spinnerJabatan = (Spinner) view.findViewById(R.id.spinnerJabatan);
+        spinnerJarak = (Spinner) view.findViewById(R.id.spinnerJarak);
+        spinnerStatus = (Spinner) view.findViewById(R.id.spinnerStatus);
+        spinnerAbsensi = (Spinner) view.findViewById(R.id.spinnerAbsensi);
 
-        getDataAgenda();
+        spinnerKaryawan = view.findViewById(R.id.spinnerNamaKaryawan);
 
-        ans1 = (TextView) view.findViewById(R.id.ans_1);
-        ans2 = (TextView) view.findViewById(R.id.ans_2);
-        recyclerView = view.findViewById(R.id.rv_hasil);
-        masukTanggal = (EditText) view.findViewById(R.id.masukTanggal);
-        masukTanggal.setOnClickListener(new View.OnClickListener() {
+        button1 = (Button) view.findViewById(R.id.btnSimpan);
+        checkBox = (CheckBox) view.findViewById(R.id.cb_set_reminder);
+
+        getDataKaryawan();
+
+        agenda();
+        jabatan();
+        status();
+        jarak();
+        absensi();
+
+        editCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCalendar();
             }
         });
 
+        editMulai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimeStart();
+            }
+        });
+
+
+        editSelesai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimeEnd();
+            }
+        });
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!editNama.getText().toString().trim().isEmpty() &&
+                        !editCalendar.getText().toString().trim().isEmpty() &&
+                        agenda != null &&
+                        jarak != null &&
+                        jabatan != null &&
+                        status != null &&
+                        absensi != null) {
+
+                    AgendaModel agendaModel = new AgendaModel();
+                    agendaModel.setJabatan(jabatan);
+                    agendaModel.setName(editNama.getText().toString());
+                    agendaModel.setTanggal(editCalendar.getText().toString());
+                    agendaModel.setJarak(jarak);
+                    agendaModel.setMeeting(agenda);
+                    agendaModel.setStatus(status);
+                    agendaModel.setAbsensi(absensi);
+                    agendaModel.setKaryawan(true);
+
+                    addDataAgendaToFirestore(agendaModel);
+                    addDataAgendaKaryawanToFirestore(agendaModel);
+
+                } else {
+                    Toast.makeText(getContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+    }
+
+    private void addDataAgendaToFirestore(AgendaModel agendaTable) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
+        db.collection("agenda")
+                .document(agendaTable.getId())
+                .set(agendaTable)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: berhasil tambah agenda");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    private void addDataAgendaKaryawanToFirestore(AgendaModel agendaTable) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
+        db.collection(idKaryawan)
+                .document(agendaTable.getId())
+                .set(agendaTable)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: berhasil tambah agenda karyawan");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document karyawan", e);
+                    }
+                });
+    }
+
+    private void getDataKaryawan() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document.getData().get("jabatan").toString().equals("Karyawan")) {
+                                UserModel user = new UserModel();
+
+                                user.setUserID(document.getData().get("userID").toString());
+                                user.setEmail(document.getData().get("email").toString());
+                                user.setPassword(document.getData().get("password").toString());
+                                user.setJabatan(document.getData().get("jabatan").toString());
+                                user.setNip(document.getData().get("nip").toString());
+                                user.setNama(document.getData().get("nama").toString());
+
+                                userModelList.add(user);
+                                Log.d(TAG, "getDataKaryawan: " + userModelList);
+                            }
+                        }
+
+                        setSpinnerKaryawan(userModelList);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void agenda() {
+        ArrayAdapter<String> dataAdapterAgenda = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, Bobot.meeting);
+        dataAdapterAgenda.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAgenda.setAdapter(dataAdapterAgenda);
+        spinnerAgenda.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                agenda = Bobot.meeting[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void jabatan() {
+        ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, Bobot.jabatan);
+        dataAdapterJabatan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerJabatan.setAdapter(dataAdapterJabatan);
+        spinnerJabatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                jabatan = Bobot.jabatan[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void status() {
+        ArrayAdapter<String> dataAdapterStatus = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, Bobot.status);
+        dataAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerStatus.setAdapter(dataAdapterStatus);
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                status = Bobot.status[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void jarak() {
+        ArrayAdapter<String> dataAdapterJarak = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, Bobot.jarak);
+        dataAdapterJarak.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerJarak.setAdapter(dataAdapterJarak);
+        spinnerJarak.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                jarak = Bobot.jarak[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void absensi() {
+        ArrayAdapter<String> dataAdapterAbsensi = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, Bobot.absensi);
+        dataAdapterAbsensi.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAbsensi.setAdapter(dataAdapterAbsensi);
+        spinnerAbsensi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                absensi = Bobot.absensi[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setSpinnerKaryawan(List<UserModel> userList) {
+        List<String> namaKaryawanList = new ArrayList<>();
+        for (UserModel user : userList) {
+            namaKaryawanList.add(user.getNama());
+        }
+        ArrayAdapter<String> dataAdapterKaryawan = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, namaKaryawanList);
+        dataAdapterKaryawan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKaryawan.setAdapter(dataAdapterKaryawan);
+        spinnerKaryawan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                karyawan = userList.get(position).getNama();
+                idKaryawan = userList.get(position).getUserID();
+                Log.d(TAG, "onItemSelected: " + idKaryawan);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void showCalendar() {
@@ -111,31 +353,9 @@ public class ManagerFragment extends Fragment {
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                tanggal = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
+                tanggal = mYear + "-" + (mMonth + 1) + "-" + mDayOfMonth;
                 String tanggal2 = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
-
-                masukTanggal.setText(tanggal2);
-
-              /*  AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
-                        List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
-                        List<AgendaTable> agenda = db.agendaDao().filterKaryawan(tanggal);
-
-                        label.addAll(list);
-                        agendas.addAll(agenda);
-
-                        for (int i = 0; i < agenda.size(); i++) {
-                            Log.e("Data Agenda", agenda.get(i).getName() + ", " + agenda.get(i).getAbsensi() + ", " + agenda.get(i).getMeeting());
-                        }
-
-
-
-                    }
-                });*/
-
-
+                editCalendar.setText(tanggal2);
             }
         };
 
@@ -146,183 +366,29 @@ public class ManagerFragment extends Fragment {
         dp.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.GREEN);
     }
 
-    public void testMobile() {
+    private void showTimeStart() {
+        Calendar calendar = Calendar.getInstance();
+        final int jam = calendar.get(Calendar.HOUR_OF_DAY);
+        final int menit = calendar.get(Calendar.MINUTE);
 
-        Log.e("AGENDA SIZE", "" + agendas.size());
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), (view, hourOfDay, minute) -> {
+            waktu = hourOfDay + ":" + minute;
+            editMulai.setText(waktu);
+        }, jam, menit, true);
 
-        for (int i = 0; i < agendas.size(); i++) {
-
-            Log.e("TRACK", "1");
-
-            HasilKonversi hasil = new HasilKonversi();
-            AgendaTable agenda = agendas.get(i);
-
-            for (int k = 0; k < Bobot.meeting.length; k++) {
-                if (Bobot.meeting[k].equals(agenda.getMeeting())) {
-                    hasil.setMeeting(Bobot.meetingCriteria[k]);
-                }
-            }
-
-            for (int k = 0; k < Bobot.jabatan.length; k++) {
-                if (Bobot.jabatan[k].equals(agenda.getJabatan())) {
-                    hasil.setJabatan(Bobot.jabatanCriteria[k]);
-                }
-            }
-
-            for (int k = 0; k < Bobot.status.length; k++) {
-                if (Bobot.status[k].equals(agenda.getStatus())) {
-                    hasil.setStatus(Bobot.statusCriteria[k]);
-                }
-            }
-
-            for (int k = 0; k < Bobot.jarak.length; k++) {
-                if (Bobot.jarak[k].equals(agenda.getJarak())) {
-                    hasil.setJarak(Bobot.jarakCriteria[k]);
-                }
-            }
-
-            for (int k = 0; k < Bobot.absensi.length; k++) {
-                if (Bobot.absensi[k].equals(agenda.getAbsensi())) {
-                    hasil.setAbsensi(Bobot.absensiCriteria[k]);
-                }
-            }
-
-            hasil.setTanggal(agenda.getTanggal());
-            hasil.setName(agenda.getName());
-            hasils.add(hasil);
-        }
-        Log.e("HASIL", hasils.size() + "");
-        for (int i = 0; i < hasils.size(); i++) {
-            Log.e("Data Hasil", hasils.get(i).getName() + ", " +
-                    hasils.get(i).getTanggal() + ", " +
-                    hasils.get(i).getMeeting() + ", " +
-                    hasils.get(i).getJabatan() + ", " +
-                    hasils.get(i).getJarak() + ", " +
-                    hasils.get(i).getStatus() + "," +
-                    hasils.get(i).getAbsensi());
-        }
-
-        Log.e("JUMLAH", "" + hasils.size());
-        if (hasils.size() > 2) {
-            Log.e("TRACK", "3");
-            Criteria criteriaJarak = new Criteria("Jarak", 3, true);
-            Criteria criteriaMeeting = new Criteria("Meeting", 4);
-            Criteria criteriaJabatan = new Criteria("Jabatan", 5);
-            Criteria criteriaStatus = new Criteria("Status", 3);
-            Criteria criteriaAbsensi = new Criteria("Absensi", 4, true);
-
-            Topsis topsis = new Topsis();
-
-            for (int i = 0; i < hasils.size(); i++) {
-                Log.e("TRACK", i + 1 + "");
-
-                Alternative agenda = new Alternative(hasils.get(i).getName());
-                agenda.addCriteriaValue(criteriaJarak, hasils.get(i).getJarak());
-                agenda.addCriteriaValue(criteriaMeeting, hasils.get(i).getMeeting());
-                agenda.addCriteriaValue(criteriaJabatan, hasils.get(i).getJabatan());
-                agenda.addCriteriaValue(criteriaStatus, hasils.get(i).getStatus());
-                agenda.addCriteriaValue(criteriaAbsensi, hasils.get(i).getAbsensi());
-
-                topsis.addAlternative(agenda);
-            }
-
-            try {
-                Log.e("FINAL HASIL", "5");
-                Alternative result = topsis.calculateOptimalSolution();
-                ans1.setText(result.getName());
-                ans2.setText("" + result.getCalculatedPerformanceScore());
-
-                printDetailedResults(topsis);
-
-                //assertEquals("Mobile 3", result.getName());
-
-            } catch (TopsisIncompleteAlternativeDataException e) {
-                System.err.println(e.getMessage());
-            }
-        }
+        timePickerDialog.show();
     }
 
-    private void printDetailedResults(Topsis topsis) {
-        ArrayList<Result> results = new ArrayList<>();
+    private void showTimeEnd() {
+        Calendar calendar = Calendar.getInstance();
+        final int jam = calendar.get(Calendar.HOUR_OF_DAY);
+        final int menit = calendar.get(Calendar.MINUTE);
 
-        for (Alternative alternative : topsis.getAlternatives()) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), (view, hourOfDay, minute) -> {
+            waktuAkhir = hourOfDay + ":" + minute;
+            editSelesai.setText(waktuAkhir);
+        }, jam, menit, true);
 
-            Result result = new Result();
-            result.setName(alternative.getName());
-            result.setScore(alternative.getCalculatedPerformanceScore() + "");
-            results.add(result);
-        }
-
-        DssAdapter dssAdapter = new DssAdapter(getContext(), results);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(dssAdapter);
-    }
-
-    private void getDataAgenda() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("agenda")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
-                                AgendaTable agenda = new AgendaTable();
-                                agenda.setAbsensi(document.getData().get("name").toString());
-                                agenda.setMeeting(document.getData().get("meeting").toString());
-                                agenda.setJabatan(document.getData().get("jabatan").toString());
-                                agenda.setJarak(document.getData().get("jarak").toString());
-                                agenda.setStatus(document.getData().get("status").toString());
-                                agenda.setTanggal(document.getData().get("tanggal").toString());
-//                                agenda.setHari(document.getData().get("hari").toString());
-                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
-                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
-                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
-                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
-                                agendas.add(agenda);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        }
-                        getActivity().runOnUiThread(ManagerFragment.this::testMobile);
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
-                    }
-                });
-    }
-
-    private void getDataAgendaKaryawan() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        db.collection(user.getUid())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
-                                AgendaTable agenda = new AgendaTable();
-                                agenda.setAbsensi(document.getData().get("name").toString());
-                                agenda.setMeeting(document.getData().get("meeting").toString());
-                                agenda.setJabatan(document.getData().get("jabatan").toString());
-                                agenda.setJarak(document.getData().get("jarak").toString());
-                                agenda.setStatus(document.getData().get("status").toString());
-                                agenda.setTanggal(document.getData().get("tanggal").toString());
-//                                agenda.setHari(document.getData().get("hari").toString());
-                                agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
-                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
-                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
-                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
-                                agendaKaryawan.add(agenda);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        }
-                        getActivity().runOnUiThread(ManagerFragment.this::testMobile);
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
-                    }
-                });
+        timePickerDialog.show();
     }
 }

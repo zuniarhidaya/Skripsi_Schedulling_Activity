@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
         if (jabatan.equals("Karyawan")) {
             nav.findItem(R.id.nav_manager).setVisible(false);
             nav.findItem(R.id.nav_pengajuan).setVisible(false);
+            nav.findItem(R.id.nav_dss).setVisible(false);
         } else {
+
             nav.findItem(R.id.nav_workshop).setVisible(false);
         }
 
@@ -74,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         //onBackPressed();
 
         View headerView = navigationView.getHeaderView(0);
-
         TextView txtName = headerView.findViewById(R.id.txt_name_nav);
         TextView txtJabatan = headerView.findViewById(R.id.txt_jabatan_nav);
 
