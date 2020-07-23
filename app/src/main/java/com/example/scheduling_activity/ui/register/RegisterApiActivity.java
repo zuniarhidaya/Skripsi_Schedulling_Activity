@@ -119,7 +119,7 @@ public class RegisterApiActivity extends AppCompatActivity {
     }
 
     private void setJabatan() {
-        String[] jabatans = new String[] {"Manager", "Karyawan"};
+        String[] jabatans = new String[] {"Manajer", "Karyawan"};
         ArrayAdapter<String> dataAdapterJabatan = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, jabatans);
         dataAdapterJabatan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJabatan.setAdapter(dataAdapterJabatan);

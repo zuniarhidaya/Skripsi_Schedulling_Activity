@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.example.scheduling_activity.ui.login.LoginApiActivity;
+
 /**
  * User: jpotts
  * Date: 8/27/13
@@ -63,13 +65,12 @@ public class SessionManager {
 
     public void logoutUser() {
         clearUserSettings();
-        redirectOnLogout(LoginActivity.class);
+        redirectOnLogout(LoginApiActivity.class);
     }
 
     public void redirectOnLogout(Class loginActivity) {
 
         Intent i = new Intent(context, loginActivity);
-
         // clear stack and start new activity
         editor.clear();
         editor.commit();

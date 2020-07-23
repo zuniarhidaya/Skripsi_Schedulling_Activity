@@ -230,7 +230,6 @@ public class DssFragment extends Fragment {
 
                         getActivity().runOnUiThread(DssFragment.this::testMobile);
 
-
                         onBackPressed();
                     }
                 });

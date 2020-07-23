@@ -182,7 +182,6 @@ public class CreateAssignActivity extends AppCompatActivity {
     private void addDataAgendaToFirestore(AgendaModel agendaTable) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
         Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
         db.collection("agenda")
                 .document(agendaTable.getId())

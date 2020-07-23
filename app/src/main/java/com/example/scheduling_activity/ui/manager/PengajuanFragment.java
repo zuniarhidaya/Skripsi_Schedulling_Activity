@@ -268,7 +268,8 @@ public class PengajuanFragment extends Fragment {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (!Boolean.parseBoolean(document.getData().get("karyawan").toString())) {
                                 AgendaTable agenda = new AgendaTable();
-                                agenda.setAbsensi(document.getData().get("name").toString());
+                                agenda.setName(document.getData().get("name").toString());
+                                agenda.setAbsensi(document.getData().get("absensi").toString());
                                 agenda.setMeeting(document.getData().get("meeting").toString());
                                 agenda.setJabatan(document.getData().get("jabatan").toString());
                                 agenda.setJarak(document.getData().get("jarak").toString());

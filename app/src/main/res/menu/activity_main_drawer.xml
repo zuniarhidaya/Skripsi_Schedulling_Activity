@@ -20,13 +20,16 @@
             android:id="@+id/nav_manager"
             android:icon="@drawable/ic_baseline_assignment_24"
             android:title="Assign Manager" />
+
         <item
             android:id="@+id/nav_pengajuan"
             android:icon="@drawable/ic_baseline_assignment_ind_24"
             android:title="Pengajuan Workshop" />
+
         <item
-            android:id="@+id/logout"
-            android:icon="@drawable/ic_baseline_exit_to_app_24"
-            android:title="Logout"/>
+            android:id="@+id/nav_workshop"
+            android:icon="@drawable/ic_baseline_assignment_ind_24"
+            android:title="Pengajuan Workshop" />
+
     </group>
 </menu>

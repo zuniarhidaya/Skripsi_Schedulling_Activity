@@ -146,7 +146,7 @@ public class CreateWorkshopFragment extends Fragment {
                             agen.setJarak(jarak);
                             agen.setStatus(status);
                             agen.setMeeting(agenda);
-                            agen.setJabatan("Manager");
+                            agen.setJabatan("Manajer");
                             agen.setAbsensi(absensi);
                             agen.setKaryawan(false);
 
@@ -161,7 +161,7 @@ public class CreateWorkshopFragment extends Fragment {
 
 
                             AgendaModel agendaModel = new AgendaModel();
-                            agendaModel.setJabatan("Manager");
+                            agendaModel.setJabatan("Manajer");
                             agendaModel.setName(editNama.getText().toString());
                             agendaModel.setTanggal(editCalendar.getText().toString());
                             agendaModel.setJarak(jarak);
@@ -188,7 +188,6 @@ public class CreateWorkshopFragment extends Fragment {
         });
     }
 
-    @SuppressLint("ShowToast")
     private void afterInsert(){
         editNama.setText("");
         editCalendar.setText("");
@@ -197,21 +196,20 @@ public class CreateWorkshopFragment extends Fragment {
         status = null;
         absensi = null;
 
-        Toast.makeText(getContext(), "Workshop Sudah di tambah", Toast.LENGTH_SHORT);
     }
 
     private void addDataAgendaToFirestore(AgendaModel agendaTable) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
         Log.d(TAG, "onSuccess: " + agendaTable.getTanggal());
         db.collection("agenda")
                 .document(agendaTable.getId())
                 .set(agendaTable)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @SuppressLint("ShowToast")
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: berhasil tambah agenda");
+                        Toast.makeText(getContext(), "Berhasil membuat Workshop", Toast.LENGTH_SHORT);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
