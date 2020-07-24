@@ -80,6 +80,7 @@
                     android:layout_toEndOf="@id/icon1"
                     android:background="@color/WhiteSmoke"
                     android:hint="@string/name"
+                    android:inputType="textPersonName"
                     android:imeOptions="actionNext"
                     android:paddingStart="10dp" />
 
@@ -96,21 +97,6 @@
                         android:layout_height="50dp"
                         android:background="#6fa8dc"
                         android:src="@drawable/jabatan_01"/>
-
-<!--                    <EditText-->
-<!--                        android:padding="10dp"-->
-<!--                        android:id="@+id/editJabatan"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignBottom="@+id/icon3"-->
-<!--                        android:layout_alignParentTop="true"-->
-<!--                        android:layout_toRightOf="@id/icon3"-->
-<!--                        android:background="@color/WhiteSmoke"-->
-<!--                        android:hint="@string/jabatan"-->
-<!--                        android:imeOptions="actionNext"-->
-<!--                        android:inputType="textLongMessage"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:paddingStart="10dp" />-->
 
                     <Spinner
                         android:id="@+id/spinnerRegis"
@@ -136,7 +122,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:background="#6fa8dc"
-                            android:src="@drawable/nomor_pegawai_01"/>
+                            android:src="@drawable/password_01"/>
 
                         <EditText
                             android:id="@+id/editId"
@@ -148,7 +134,7 @@
                             android:background="@color/WhiteSmoke"
                             android:hint="Password"
                             android:imeOptions="actionNext"
-                            android:inputType="number"
+                            android:inputType="textPassword"
                             android:paddingStart="10dp" />
 
                     </RelativeLayout>
@@ -192,7 +178,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:background="#6fa8dc"
-                            android:src="@drawable/nomor_pegawai_01"/>
+                            android:src="@drawable/email_01"/>
 
                         <EditText
                             android:hint="Email"

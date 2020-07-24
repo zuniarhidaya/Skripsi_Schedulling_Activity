@@ -21,6 +21,20 @@
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Mulai :"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Akhir :"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Score : "
             android:textSize="16sp"/>
 
@@ -40,6 +54,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textMulai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mulai"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textAkhir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Akhir"
             android:textSize="16sp"/>
 
         <TextView

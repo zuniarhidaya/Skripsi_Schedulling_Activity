@@ -86,19 +86,18 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <Button
-            android:id="@+id/ubahProfil"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:text="@string/ubah"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="15sp"/>
+<!--        <Button-->
+<!--            android:id="@+id/ubahProfil"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:foregroundGravity="center"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/ubah"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000"-->
+<!--            android:textSize="15sp"/>-->
     </LinearLayout>
 
 </RelativeLayout>

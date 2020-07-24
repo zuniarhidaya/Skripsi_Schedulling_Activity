@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -93,7 +92,8 @@
                     android:padding="10dp"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
             </RelativeLayout>
 
             <LinearLayout
@@ -162,8 +162,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:text="Jarak Agenda Anda : "
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -188,17 +188,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:text="Status Pertemuan :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <Spinner
-                    android:layout_marginStart="5dp"
                     android:id="@+id/spinnerStatus"
                     android:layout_width="fill_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -213,17 +213,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:text="Absensi untuk Kantor :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <Spinner
-                    android:layout_marginStart="5dp"
                     android:id="@+id/spinnerAbsensi"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
 
@@ -239,26 +239,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:text="Pilih Karyawan :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <Spinner
-                    android:layout_marginStart="5dp"
                     android:id="@+id/spinnerNamaKaryawan"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:buttonTint="@color/White"
                 android:id="@+id/cb_set_reminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
+                android:buttonTint="@color/White"
                 android:text="Tambah Pengingat"
                 android:textColor="@color/White"
                 android:textColorHighlight="@color/White" />
@@ -278,7 +279,6 @@
                 android:padding="5dp"
                 android:text="Simpan"
                 android:textColor="@color/hitam" />
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
