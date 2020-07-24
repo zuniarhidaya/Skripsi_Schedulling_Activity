@@ -8,20 +8,15 @@
     android:orientation="vertical"
     tools:context=".ui.login.LoginApiActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/TransWhite"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/TransWhite"-->
+<!--        android:orientation="vertical">-->
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginTop="60dp">
@@ -78,9 +73,10 @@
                 android:text="Login" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Belum punya akun?"
+                android:id="@+id/belum"
                 android:layout_below="@id/login"
                 android:textColor="#fff"
                 android:layout_above="@id/register"
@@ -96,14 +92,13 @@
                 android:id="@+id/register"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_below="@id/login"
+                android:layout_below="@id/belum"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_button"
                 android:text="Register" />
         </RelativeLayout>
 
-    </LinearLayout>
-    </LinearLayout>
+<!--    </LinearLayout>-->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
