@@ -25,9 +25,9 @@ public class AgendaTable {
     @ColumnInfo(name = "hari")
     private String hari = null;
     @ColumnInfo(name = "awal")
-    private int awal = 0;
+    private String awal = null;
     @ColumnInfo(name = "akhir")
-    private int akhir = 0;
+    private String akhir = null;
     @ColumnInfo(name = "reminder")
     private boolean isReminder = false;
     @ColumnInfo(name = "time")
@@ -43,19 +43,19 @@ public class AgendaTable {
         this.time = time;
     }
 
-    public int getAwal() {
+    public String getAwal() {
         return awal;
     }
 
-    public void setAwal(int awal) {
+    public void setAwal(String awal) {
         this.awal = awal;
     }
 
-    public int getAkhir() {
+    public String getAkhir() {
         return akhir;
     }
 
-    public void setAkhir(int akhir) {
+    public void setAkhir(String akhir) {
         this.akhir = akhir;
     }
 

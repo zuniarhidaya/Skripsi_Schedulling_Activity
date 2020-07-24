@@ -25,7 +25,6 @@ import com.example.scheduling_activity.ui.alarm.service.AlarmHelper;
 import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
-import com.example.scheduling_activity.ui.detail.DetailKegiatan;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,6 +104,8 @@ public class CreatePengajuanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editNama.getText().toString().trim().isEmpty() &&
                         !editCalendar.getText().toString().trim().isEmpty() &&
+                        editMulai != null &&
+                        editSelesai != null &&
                         jarak != null &&
                         status != null &&
                         absensi != null) {
@@ -119,6 +120,8 @@ public class CreatePengajuanActivity extends AppCompatActivity {
                             agen.setName(editNama.getText().toString());
                             agen.setTanggal(editCalendar.getText().toString());
                             agen.setJarak(jarak);
+                            agen.setAwal(waktu);
+                            agen.setAkhir(waktuAkhir);
                             agen.setStatus(status);
                             agen.setMeeting(agenda);
                             agen.setJabatan("Manajer");
@@ -146,7 +149,7 @@ public class CreatePengajuanActivity extends AppCompatActivity {
                     intent = new Intent(CreatePengajuanActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreatePengajuanActivity.this, "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -362,5 +365,16 @@ public class CreatePengajuanActivity extends AppCompatActivity {
         }, jam, menit, true);
 
         timePickerDialog.show();
+    }
+
+    private void afterInsert(){
+        editNama.setText("");
+        editCalendar.setText("");
+        editMulai = null;
+        editSelesai = null;
+        jarak = null;
+        agenda = null;
+        status = null;
+        absensi = null;
     }
 }

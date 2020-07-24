@@ -1,9 +1,5 @@
 package com.example.scheduling_activity.ui.database.agenda;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import java.util.UUID;
 
 public class AgendaModel {
@@ -16,8 +12,8 @@ public class AgendaModel {
     private String absensi = null;
     private String tanggal = null;
     private String hari = null;
-    private int awal = 0;
-    private int akhir = 0;
+    private String awal = null;
+    private String akhir = null;
     private boolean isReminder = false;
     private Long time = 0L;
     private boolean isKaryawan = false;
@@ -30,19 +26,19 @@ public class AgendaModel {
         this.time = time;
     }
 
-    public int getAwal() {
+    public String getAwal() {
         return awal;
     }
 
-    public void setAwal(int awal) {
+    public void setAwal(String awal) {
         this.awal = awal;
     }
 
-    public int getAkhir() {
+    public String getAkhir() {
         return akhir;
     }
 
-    public void setAkhir(int akhir) {
+    public void setAkhir(String akhir) {
         this.akhir = akhir;
     }
 
@@ -66,7 +62,7 @@ public class AgendaModel {
 
     }
 
-    public AgendaModel(String name, String meeting, String jabatan, String status, String jarak, String absensi, String tanggal, String hari, int awal, int akhir, boolean isReminder, Long time, boolean isKaryawan) {
+    public AgendaModel(String name, String meeting, String jabatan, String status, String jarak, String absensi, String tanggal, String hari, String awal, String akhir, boolean isReminder, Long time, boolean isKaryawan) {
         this.name = name;
         this.meeting = meeting;
         this.jabatan = jabatan;

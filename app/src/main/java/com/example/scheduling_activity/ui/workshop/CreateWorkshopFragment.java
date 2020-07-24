@@ -3,7 +3,6 @@ package com.example.scheduling_activity.ui.workshop;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,14 +25,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.scheduling_activity.Bobot;
-import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
 import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaModel;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
-import com.example.scheduling_activity.ui.manager.CreatePengajuanActivity;
-import com.example.scheduling_activity.ui.manager.ManagerViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -130,6 +126,8 @@ public class CreateWorkshopFragment extends Fragment {
             public void onClick(View v) {
                 if (!editNama.getText().toString().trim().isEmpty() &&
                         !editCalendar.getText().toString().trim().isEmpty() &&
+                        editMulai != null &&
+                        editSelesai != null &&
                         jarak != null &&
                         status != null &&
                         absensi != null) {
@@ -143,6 +141,8 @@ public class CreateWorkshopFragment extends Fragment {
 
                             agen.setName(editNama.getText().toString());
                             agen.setTanggal(editCalendar.getText().toString());
+                            agen.setAwal(waktu);
+                            agen.setAkhir(waktuAkhir);
                             agen.setJarak(jarak);
                             agen.setStatus(status);
                             agen.setMeeting(agenda);
@@ -164,6 +164,8 @@ public class CreateWorkshopFragment extends Fragment {
                             agendaModel.setJabatan("Manajer");
                             agendaModel.setName(editNama.getText().toString());
                             agendaModel.setTanggal(editCalendar.getText().toString());
+                            agendaModel.setAwal(waktu);
+                            agendaModel.setAkhir(waktuAkhir);
                             agendaModel.setJarak(jarak);
                             agendaModel.setMeeting(agenda);
                             agendaModel.setStatus(status);
@@ -179,7 +181,7 @@ public class CreateWorkshopFragment extends Fragment {
                             }
                         }
                     });
-
+                    Toast.makeText(getContext(), "Agenda Berhasil Dibuat", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                 }
@@ -191,11 +193,12 @@ public class CreateWorkshopFragment extends Fragment {
     private void afterInsert(){
         editNama.setText("");
         editCalendar.setText("");
+        editMulai.setText("");
+        editSelesai.setText("");
         jarak = null;
         agenda = null;
         status = null;
         absensi = null;
-
     }
 
     private void addDataAgendaToFirestore(AgendaModel agendaTable) {

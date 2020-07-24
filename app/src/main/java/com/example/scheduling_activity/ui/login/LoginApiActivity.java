@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.scheduling_activity.MainActivity;
 import com.example.scheduling_activity.R;
@@ -61,7 +60,7 @@ public class LoginApiActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(LoginApiActivity.this, RegisterApiActivity.class);
                 startActivity(i);
-                finish();
+
             }
         });
 
@@ -83,7 +82,7 @@ public class LoginApiActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginApiActivity.this, "Login Gagal", Toast.LENGTH_SHORT).show();
-
+                            onBackPressed();
                         }
 
                     }
@@ -108,5 +107,9 @@ public class LoginApiActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginApiActivity.this, MainActivity.class));
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 }

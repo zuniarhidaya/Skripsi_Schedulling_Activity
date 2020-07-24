@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
         nama = (TextView) view.findViewById(R.id.namaProfil);
         jabatan = (TextView) view.findViewById(R.id.jabatanProfil);
         pegawai = (TextView) view.findViewById(R.id.pegawaiProfil);
-        ubah = (Button) view.findViewById(R.id.ubahProfil);
+        //ubah = (Button) view.findViewById(R.id.ubahProfil);
 
         session = new SessionManager(getContext());
         setData();
@@ -65,12 +65,12 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        ubah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
+//        ubah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDialog();
+//            }
+//        });
     }
 
     private void setData() {

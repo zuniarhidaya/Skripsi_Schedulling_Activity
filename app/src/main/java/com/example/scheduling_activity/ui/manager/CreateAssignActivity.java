@@ -27,16 +27,11 @@ import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaModel;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
-import com.example.scheduling_activity.ui.login.LoginApiActivity;
-import com.example.scheduling_activity.ui.register.RegisterApiActivity;
 import com.example.scheduling_activity.ui.register.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.auth.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -132,6 +127,8 @@ public class CreateAssignActivity extends AppCompatActivity {
                 if (!editNama.getText().toString().trim().isEmpty() &&
                         !editCalendar.getText().toString().trim().isEmpty() &&
                         agenda != null &&
+                        editMulai != null &&
+                        editSelesai != null &&
                         jarak != null &&
                         jabatan != null &&
                         status != null &&
@@ -148,6 +145,8 @@ public class CreateAssignActivity extends AppCompatActivity {
                             agen.setName(editNama.getText().toString());
                             agen.setTanggal(editCalendar.getText().toString());
                             agen.setJarak(jarak);
+                            agen.setAwal(waktu);
+                            agen.setAkhir(waktuAkhir);
                             agen.setMeeting(agenda);
                             agen.setStatus(status);
                             agen.setAbsensi(absensi);
@@ -167,6 +166,8 @@ public class CreateAssignActivity extends AppCompatActivity {
                             agendaModel.setJabatan(jabatan);
                             agendaModel.setName(editNama.getText().toString());
                             agendaModel.setTanggal(editCalendar.getText().toString());
+                            agendaModel.setAwal(waktu);
+                            agendaModel.setAkhir(waktuAkhir);
                             agendaModel.setJarak(jarak);
                             agendaModel.setMeeting(agenda);
                             agendaModel.setStatus(status);
@@ -176,18 +177,19 @@ public class CreateAssignActivity extends AppCompatActivity {
                             addDataAgendaToFirestore(agendaModel);
                             addDataAgendaKaryawanToFirestore(agendaModel);
 
+
                             for (int i = 0; i < list.size(); i++) {
                                 Log.e("Data", list.get(i).getName() + ", " + list.get(i).getTanggal() + ", " + list.get(i).getMeeting() + ", " + list.get(i).getJabatan() + ", " + list.get(i).getJarak() + ", " + list.get(i).getStatus() + ", " + list.get(i).getAbsensi());
                             }
                         }
                     });
 
-
                     Intent intent;
                     intent = new Intent(CreateAssignActivity.this, MainActivity.class);
                     startActivity(intent);
+                    Toast.makeText(CreateAssignActivity.this, "Agenda Berhasil Dibuat", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateAssignActivity.this, "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -514,6 +516,17 @@ public class CreateAssignActivity extends AppCompatActivity {
         }, jam, menit, true);
 
         timePickerDialog.show();
+    }
+
+    private void afterInsert(){
+        editNama.setText("");
+        editCalendar.setText("");
+        editMulai = null;
+        editSelesai = null;
+        jarak = null;
+        agenda = null;
+        status = null;
+        absensi = null;
     }
 
 }

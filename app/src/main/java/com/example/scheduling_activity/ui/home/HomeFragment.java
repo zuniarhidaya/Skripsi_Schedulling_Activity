@@ -62,7 +62,6 @@ public class HomeFragment extends Fragment {
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
 
-
         });
         return root;
     }
@@ -95,7 +94,6 @@ public class HomeFragment extends Fragment {
 
         Log.e("Date", dateNow);
 
-
         //Pilih Tanggal filter tanggal
 
         //Dafault hari ini (pertama kali buka)
@@ -112,7 +110,7 @@ public class HomeFragment extends Fragment {
                     int monthPlusOne = months + 1;
                     String pickedDate = dayOfMonths + "-" + monthPlusOne + "-" + years;
                     getDataAgendaKaryawan(pickedDate);
-
+                    tanggalAgenda.setText(pickedDate);
                 }
             });
         } else {
@@ -124,6 +122,7 @@ public class HomeFragment extends Fragment {
                     int monthPlusOne = months + 1;
                     String pickedDate = dayOfMonths + "-" + monthPlusOne + "-" + years;
                     getDataAgenda(pickedDate);
+                    tanggalAgenda.setText(pickedDate);
                 }
             });
         }
@@ -148,9 +147,8 @@ public class HomeFragment extends Fragment {
                                     agenda.setJarak(document.getData().get("jarak").toString());
                                     agenda.setStatus(document.getData().get("status").toString());
                                     agenda.setTanggal(document.getData().get("tanggal").toString());
-//                                agenda.setHari(document.getData().get("hari").toString());
-                                    agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                    agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                    agenda.setAwal(document.getData().get("awal").toString());
+                                    agenda.setAkhir(document.getData().get("akhir").toString());
                                     agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
                                     agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                     agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
@@ -189,9 +187,8 @@ public class HomeFragment extends Fragment {
                                     agenda.setJarak(document.getData().get("jarak").toString());
                                     agenda.setStatus(document.getData().get("status").toString());
                                     agenda.setTanggal(document.getData().get("tanggal").toString());
-//                                agenda.setHari(document.getData().get("hari").toString());
-                                    agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                    agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                    agenda.setAwal(document.getData().get("awal").toString());
+                                    agenda.setAkhir(document.getData().get("akhir").toString());
                                     agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
                                     agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                     agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));

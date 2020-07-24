@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scheduling_activity.R;
-import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 
 import java.util.List;
 
@@ -44,17 +43,20 @@ public class DssAdapter extends RecyclerView.Adapter<DssAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textName;
         private TextView textScore;
+        private TextView textMulai;
+        private TextView textSelesai;
 
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
            textName = itemView.findViewById(R.id.textName);
            textScore = itemView.findViewById(R.id.textScore);
+//           textMulai = itemView.findViewById(R.id.textMulai);
+//           textSelesai = itemView.findViewById(R.id.textAkhir);
        }
 
        public void binding(Result result){
            textName.setText(result.getName());
            textScore.setText(result.getScore());
-
 
        }
    }

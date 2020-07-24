@@ -138,6 +138,8 @@ public class ManagerFragment extends Fragment {
                 if (!editNama.getText().toString().trim().isEmpty() &&
                         !editCalendar.getText().toString().trim().isEmpty() &&
                         agenda != null &&
+                        editMulai != null &&
+                        editSelesai != null &&
                         jarak != null &&
                         jabatan != null &&
                         status != null &&
@@ -148,6 +150,8 @@ public class ManagerFragment extends Fragment {
                     agendaModel.setName(editNama.getText().toString());
                     agendaModel.setTanggal(editCalendar.getText().toString());
                     agendaModel.setJarak(jarak);
+                    agendaModel.setAwal(waktu);
+                    agendaModel.setAkhir(waktuAkhir);
                     agendaModel.setMeeting(agenda);
                     agendaModel.setStatus(status);
                     agendaModel.setAbsensi(absensi);
@@ -155,7 +159,8 @@ public class ManagerFragment extends Fragment {
 
                     addDataAgendaToFirestore(agendaModel);
                     addDataAgendaKaryawanToFirestore(agendaModel);
-
+                    getActivity().runOnUiThread(() -> afterInsert());
+                    Toast.makeText(getContext(), "Agenda Berhasil Dibuat", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
                 }
@@ -163,6 +168,17 @@ public class ManagerFragment extends Fragment {
             }
         });
 
+    }
+
+    private void afterInsert(){
+        editNama.setText("");
+        editCalendar.setText("");
+        editMulai = null;
+        editSelesai = null;
+        jarak = null;
+        agenda = null;
+        status = null;
+        absensi = null;
     }
 
     private void addDataAgendaToFirestore(AgendaModel agendaTable) {

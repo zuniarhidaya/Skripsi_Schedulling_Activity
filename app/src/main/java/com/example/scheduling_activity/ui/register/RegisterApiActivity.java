@@ -12,11 +12,8 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.scheduling_activity.Bobot;
 import com.example.scheduling_activity.R;
-import com.example.scheduling_activity.SplashScreenActivity;
 import com.example.scheduling_activity.ui.login.LoginApiActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -133,7 +130,6 @@ public class RegisterApiActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
 }

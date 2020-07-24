@@ -28,8 +28,6 @@ import com.example.scheduling_activity.topsis.Alternative;
 import com.example.scheduling_activity.topsis.Criteria;
 import com.example.scheduling_activity.topsis.Topsis;
 import com.example.scheduling_activity.topsis.TopsisIncompleteAlternativeDataException;
-import com.example.scheduling_activity.ui.database.AppExecutors;
-import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import com.example.scheduling_activity.ui.dss.DssAdapter;
@@ -125,8 +123,6 @@ public class PengajuanFragment extends Fragment {
 
                 masukTanggal.setText(tanggal2);
                 getDataAgenda(tanggal2);
-
-
 
             }
         };
@@ -226,8 +222,6 @@ public class PengajuanFragment extends Fragment {
 
                 printDetailedResults(topsis);
 
-                //assertEquals("Mobile 3", result.getName());
-
             } catch (TopsisIncompleteAlternativeDataException e) {
                 System.err.println(e.getMessage());
             }
@@ -237,9 +231,8 @@ public class PengajuanFragment extends Fragment {
     private void printDetailedResults(Topsis topsis) {
 
         ArrayList<Result> results = new ArrayList<>();
-
         for (Alternative alternative : topsis.getAlternatives()) {
-
+            AgendaTable agenda = new AgendaTable();
             Result result = new Result();
             result.setName(alternative.getName());
             result.setScore(alternative.getCalculatedPerformanceScore() + "");
@@ -271,8 +264,8 @@ public class PengajuanFragment extends Fragment {
                                     agenda.setStatus(document.getData().get("status").toString());
                                     agenda.setTanggal(document.getData().get("tanggal").toString());
 //                                agenda.setHari(document.getData().get("hari").toString());
-                                    agenda.setAwal(Integer.parseInt(document.getData().get("awal").toString()));
-                                    agenda.setAkhir(Integer.parseInt(document.getData().get("akhir").toString()));
+                                    agenda.setAwal(document.getData().get("awal").toString());
+                                    agenda.setAkhir(document.getData().get("akhir").toString());
                                     agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
                                     agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                     agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
@@ -287,4 +280,5 @@ public class PengajuanFragment extends Fragment {
                     }
                 });
     }
+
 }

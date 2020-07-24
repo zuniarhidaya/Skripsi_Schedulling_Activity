@@ -45,6 +45,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         private TextView textName;
         private TextView textJenis;
         private TextView textStatus;
+        private TextView textAwal;
+        private TextView textAkhir;
         private TextView textJarak;
         private TextView textJabatan;
         private TextView textAbsensi;
@@ -54,6 +56,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
            textName = itemView.findViewById(R.id.textName);
            textJenis = itemView.findViewById(R.id.textJenis);
            textJarak = itemView.findViewById(R.id.textJarak);
+           textAwal = itemView.findViewById(R.id.textMulai);
+           textAkhir = itemView.findViewById(R.id.textAkhir);
            textJabatan = itemView.findViewById(R.id.textJabatan);
            textStatus = itemView.findViewById(R.id.textStatus);
            textAbsensi = itemView.findViewById(R.id.textAbsensi);
@@ -63,6 +67,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
            textName.setText(agenda.getName());
            textJenis.setText(agenda.getMeeting());
            textJarak.setText(agenda.getJarak());
+           textAwal.setText(agenda.getAwal());
+           textAkhir.setText(agenda.getAkhir());
            textJabatan.setText(agenda.getJabatan());
            textStatus.setText(agenda.getStatus());
            textAbsensi.setText(agenda.getAbsensi());
