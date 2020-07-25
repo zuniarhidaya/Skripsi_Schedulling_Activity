@@ -91,9 +91,7 @@ public class PengajuanFragment extends Fragment {
 
         String dateNow = day + "-" + month + "-" + year;
 
-
         getDataAgenda(dateNow);
-
 
         ans1 = (TextView) view.findViewById(R.id.ans_1);
         ans2 = (TextView) view.findViewById(R.id.ans_2);
@@ -112,8 +110,6 @@ public class PengajuanFragment extends Fragment {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-
 
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override

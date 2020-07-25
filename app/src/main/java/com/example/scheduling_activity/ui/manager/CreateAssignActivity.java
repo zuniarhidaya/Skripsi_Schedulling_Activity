@@ -277,15 +277,15 @@ public class CreateAssignActivity extends AppCompatActivity {
         int month = Integer.parseInt(date[1]);
         int day = Integer.parseInt(date[2]);
 
-        int hour = Integer.parseInt(time[0]);
-        int minute = Integer.parseInt(time[1]);
+        String hour = (time[0].toString());
+        String minute = (time[1].toString());
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(minute));
         calendar.set(Calendar.SECOND, 0);
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
@@ -343,7 +343,6 @@ public class CreateAssignActivity extends AppCompatActivity {
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("beginTime", startTime);
         intent.putExtra("allDay", false);
-        //intent.putExtra("rrule", "FREQ=DAILY");
         intent.putExtra("endTime", endTime);
         intent.putExtra("title", editNama.getText().toString());
         startActivity(intent);

@@ -31,6 +31,8 @@ import com.example.scheduling_activity.ui.database.AppExecutors;
 import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +40,7 @@ import java.util.List;
 
 public class DssFragment extends Fragment {
 
+    private static final String TAG = "DssFragment" ;
     private DssViewModel dssViewModel;
 
     private EditText masukTanggal;
@@ -73,8 +76,6 @@ public class DssFragment extends Fragment {
 
         ans1 = (TextView) view.findViewById(R.id.ans_1);
         ans2 = (TextView) view.findViewById(R.id.ans_2);
-        //ans3 = (TextView) view.findViewById(R.id.ans_3);
-        //ans4 = (TextView) view.findViewById(R.id.ans_4);
         recyclerView = view.findViewById(R.id.rv_hasil);
         masukTanggal = (EditText) view.findViewById(R.id.masukTanggal);
         masukTanggal.setOnClickListener(v -> showCalendar());
@@ -168,8 +169,6 @@ public class DssFragment extends Fragment {
 
                 printDetailedResults(topsis);
 
-                //assertEquals("Mobile 3", result.getName());
-
             } catch (TopsisIncompleteAlternativeDataException e) {
                 System.err.println(e.getMessage());
             }
@@ -213,6 +212,7 @@ public class DssFragment extends Fragment {
                 String tanggal2 = mDayOfMonth + "-" + (mMonth + 1) + "-" + mYear;
 
                 masukTanggal.setText(tanggal2);
+                getDataAgenda(tanggal2);
 
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
@@ -243,5 +243,37 @@ public class DssFragment extends Fragment {
         dp.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
         dp.getButton(DatePickerDialog.BUTTON_NEUTRAL).setTextColor(Color.BLUE);
         dp.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.GREEN);
+    }
+
+    private void getDataAgenda(String date) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("agenda")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(document.getData().get("tanggal").toString().equals(date)) {
+                                    AgendaTable agenda = new AgendaTable();
+                                    agenda.setName(document.getData().get("name").toString());
+                                    agenda.setAbsensi(document.getData().get("absensi").toString());
+                                    agenda.setMeeting(document.getData().get("meeting").toString());
+                                    agenda.setJabatan(document.getData().get("jabatan").toString());
+                                    agenda.setJarak(document.getData().get("jarak").toString());
+                                    agenda.setStatus(document.getData().get("status").toString());
+                                    agenda.setTanggal(document.getData().get("tanggal").toString());
+                                    agenda.setAwal(document.getData().get("awal").toString());
+                                    agenda.setAkhir(document.getData().get("akhir").toString());
+                                    agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                    agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                    agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                    agendas.add(agenda);
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                        }
+                        getActivity().runOnUiThread(DssFragment.this::testMobile);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                });
     }
 }

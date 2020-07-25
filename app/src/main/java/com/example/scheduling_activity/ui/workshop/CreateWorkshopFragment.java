@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -61,7 +60,7 @@ public class CreateWorkshopFragment extends Fragment {
     private String waktu;
     private String waktuAkhir;
 
-    private CheckBox checkBox;
+//    private CheckBox checkBox;
 
     @Nullable
     @Override
@@ -92,7 +91,7 @@ public class CreateWorkshopFragment extends Fragment {
         spinnerAbsensi = (Spinner) view.findViewById(R.id.spinnerAbsensi);
         spinnerAgenda = (Spinner) view.findViewById(R.id.spinnerAgenda);
         button1 = (Button) view.findViewById(R.id.btnSimpan);
-        checkBox = (CheckBox) view.findViewById(R.id.cb_set_reminder);
+//        checkBox = (CheckBox) view.findViewById(R.id.cb_set_reminder);
 
         status();
         jarak();
@@ -150,12 +149,12 @@ public class CreateWorkshopFragment extends Fragment {
                             agen.setAbsensi(absensi);
                             agen.setKaryawan(false);
 
-                            if (checkBox.isChecked()) {
-                                agen.setReminder(true);
-                            } else {
-                                agen.setTime(0L);
-                                agen.setReminder(false);
-                            }
+//                            if (checkBox.isChecked()) {
+//                                agen.setReminder(true);
+//                            } else {
+//                                agen.setTime(0L);
+//                                agen.setReminder(false);
+//                            }
 
                             db.agendaDao().insertAgenda(agen);
 
