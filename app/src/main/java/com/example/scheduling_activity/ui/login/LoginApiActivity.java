@@ -51,7 +51,12 @@ public class LoginApiActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(editUsername.getText().toString(), editPassword.getText().toString());
+                if (!editUsername.getText().toString().trim().isEmpty() &&
+                    !editPassword.getText().toString().trim().isEmpty()) {
+                    login(editUsername.getText().toString(), editPassword.getText().toString());
+                } else {
+                    Toast.makeText(LoginApiActivity.this, "Harap Lengkapi Data Anda!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -78,7 +83,7 @@ public class LoginApiActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             getUserData(user.getUid());
-                        } else {
+                        } else{
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginApiActivity.this, "Login Gagal", Toast.LENGTH_SHORT).show();
