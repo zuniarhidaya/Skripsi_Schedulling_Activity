@@ -70,7 +70,7 @@ public class CreatePengajuanActivity extends AppCompatActivity {
         spinnerAbsensi = (Spinner) findViewById(R.id.spinnerAbsensi);
         spinnerAgenda = (Spinner) findViewById(R.id.spinnerAgenda);
         button1 = (Button) findViewById(R.id.btnSimpan);
-        checkBox = (CheckBox) findViewById(R.id.cb_set_reminder);
+        //checkBox = (CheckBox) findViewById(R.id.cb_set_reminder);
 
         status();
         jarak();
@@ -128,13 +128,13 @@ public class CreatePengajuanActivity extends AppCompatActivity {
                             agen.setAbsensi(absensi);
                             agen.setKaryawan(false);
 
-                            if (checkBox.isChecked()) {
-                                setEvent();
-                                agen.setReminder(true);
-                            } else {
-                                agen.setTime(0L);
-                                agen.setReminder(false);
-                            }
+//                            if (checkBox.isChecked()) {
+//                                setEvent();
+//                                agen.setReminder(true);
+//                            } else {
+//                                agen.setTime(0L);
+//                                agen.setReminder(false);
+//                            }
 
                             db.agendaDao().insertAgenda(agen);
 
