@@ -252,23 +252,23 @@ public class DssFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(document.getData().get("tanggal").toString().equals(date)) {
-                                    AgendaTable agenda = new AgendaTable();
-                                    agenda.setName(document.getData().get("name").toString());
-                                    agenda.setAbsensi(document.getData().get("absensi").toString());
-                                    agenda.setMeeting(document.getData().get("meeting").toString());
-                                    agenda.setJabatan(document.getData().get("jabatan").toString());
-                                    agenda.setJarak(document.getData().get("jarak").toString());
-                                    agenda.setStatus(document.getData().get("status").toString());
-                                    agenda.setTanggal(document.getData().get("tanggal").toString());
-                                    agenda.setAwal(document.getData().get("awal").toString());
-                                    agenda.setAkhir(document.getData().get("akhir").toString());
-                                    agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
-                                    agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
-                                    agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
-                                    agendas.add(agenda);
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                }
+                            if(document.getData().get("tanggal").toString().equals(date)) {
+                                AgendaTable agenda = new AgendaTable();
+                                agenda.setName(document.getData().get("name").toString());
+                                agenda.setAbsensi(document.getData().get("absensi").toString());
+                                agenda.setMeeting(document.getData().get("meeting").toString());
+                                agenda.setJabatan(document.getData().get("jabatan").toString());
+                                agenda.setJarak(document.getData().get("jarak").toString());
+                                agenda.setStatus(document.getData().get("status").toString());
+                                agenda.setTanggal(document.getData().get("tanggal").toString());
+//                                agenda.setAwal(document.getData().get("awal").toString());
+//                                agenda.setAkhir(document.getData().get("akhir").toString());
+//                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+                                agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
+                                agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
+                                agendas.add(agenda);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
                         }
                         getActivity().runOnUiThread(DssFragment.this::testMobile);
                     } else {
