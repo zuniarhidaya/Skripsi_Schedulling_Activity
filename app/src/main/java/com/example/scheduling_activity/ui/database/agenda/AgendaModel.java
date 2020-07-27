@@ -14,6 +14,25 @@ public class AgendaModel {
     private String hari = null;
     private String awal = null;
     private String akhir = null;
+    private String urgensi = null;
+    private String prioritas = null;
+
+    public String getUrgensi() {
+        return urgensi;
+    }
+
+    public void setUrgensi(String urgensi) {
+        this.urgensi = urgensi;
+    }
+
+    public String getPrioritas() {
+        return prioritas;
+    }
+
+    public void setPrioritas(String prioritas) {
+        this.prioritas = prioritas;
+    }
+
     private boolean isReminder = false;
     private Long time = 0L;
     private boolean isKaryawan = false;

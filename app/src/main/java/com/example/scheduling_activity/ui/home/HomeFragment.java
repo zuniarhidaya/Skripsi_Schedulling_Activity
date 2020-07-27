@@ -149,6 +149,8 @@ public class HomeFragment extends Fragment {
                                     agenda.setTanggal(document.getData().get("tanggal").toString());
                                     agenda.setAwal(document.getData().get("awal").toString());
                                     agenda.setAkhir(document.getData().get("akhir").toString());
+                                    agenda.setUrgensi(document.getData().get("urgensi").toString());
+                                    agenda.setPrioritas(document.getData().get("prioritas").toString());
                                     agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
                                     agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                     agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
@@ -189,6 +191,8 @@ public class HomeFragment extends Fragment {
                                     agenda.setTanggal(document.getData().get("tanggal").toString());
                                     agenda.setAwal(document.getData().get("awal").toString());
                                     agenda.setAkhir(document.getData().get("akhir").toString());
+                                    agenda.setUrgensi(document.getData().get("urgensi").toString());
+                                    agenda.setPrioritas(document.getData().get("prioritas").toString());
                                     agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
                                     agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                     agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));

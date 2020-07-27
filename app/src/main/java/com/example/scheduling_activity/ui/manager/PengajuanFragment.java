@@ -259,7 +259,6 @@ public class PengajuanFragment extends Fragment {
                                     agenda.setJarak(document.getData().get("jarak").toString());
                                     agenda.setStatus(document.getData().get("status").toString());
                                     agenda.setTanggal(document.getData().get("tanggal").toString());
-//                                agenda.setHari(document.getData().get("hari").toString());
                                     agenda.setAwal(document.getData().get("awal").toString());
                                     agenda.setAkhir(document.getData().get("akhir").toString());
                                     agenda.setTime(Long.valueOf(document.getData().get("time").toString()));

@@ -50,6 +50,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         private TextView textJarak;
         private TextView textJabatan;
         private TextView textAbsensi;
+        private TextView textUrgensi;
+        private TextView textPrioritas;
 
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
@@ -61,6 +63,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
            textJabatan = itemView.findViewById(R.id.textJabatan);
            textStatus = itemView.findViewById(R.id.textStatus);
            textAbsensi = itemView.findViewById(R.id.textAbsensi);
+           textUrgensi = itemView.findViewById(R.id.textUrgensi);
+           textPrioritas = itemView.findViewById(R.id.textPrioritas);
        }
 
        public void binding(AgendaTable agenda){
@@ -72,6 +76,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
            textJabatan.setText(agenda.getJabatan());
            textStatus.setText(agenda.getStatus());
            textAbsensi.setText(agenda.getAbsensi());
+           textUrgensi.setText(agenda.getUrgensi());
+           textPrioritas.setText(agenda.getPrioritas());
 
        }
    }
