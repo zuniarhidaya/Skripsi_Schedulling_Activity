@@ -66,6 +66,20 @@
             android:text="Absensi :"
             android:textSize="16sp"/>
 
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgensi :"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioritas :"
+            android:textSize="16sp"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -138,6 +152,24 @@
             android:layout_height="wrap_content"
             android:text="Absensi"
             android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textUrgensi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgensi"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textPrioritas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioritas"
+            android:textSize="16sp"/>
+
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

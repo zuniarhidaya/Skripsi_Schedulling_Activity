@@ -53,6 +53,8 @@ public class CreateAssignActivity extends AppCompatActivity {
     private Spinner spinnerJarak;
     private Spinner spinnerStatus;
     private Spinner spinnerAbsensi;
+    private Spinner spinnerUrgensi;
+    private Spinner spinnerPrioritas;
 
     private Spinner spinnerKaryawan;
     private Button button1;
@@ -62,6 +64,8 @@ public class CreateAssignActivity extends AppCompatActivity {
     private String jabatan;
     private String status;
     private String absensi;
+    private String urgensi;
+    private String prioritas;
     private String tanggal;
     private String waktu;
     private String waktuAkhir;
@@ -85,6 +89,8 @@ public class CreateAssignActivity extends AppCompatActivity {
         spinnerJarak = (Spinner) findViewById(R.id.spinnerJarak);
         spinnerStatus = (Spinner) findViewById(R.id.spinnerStatus);
         spinnerAbsensi = (Spinner) findViewById(R.id.spinnerAbsensi);
+        spinnerUrgensi = (Spinner) findViewById(R.id.spinnerUrgensi);
+        spinnerPrioritas = (Spinner) findViewById(R.id.spinnerPrioritas);
 
         spinnerKaryawan = findViewById(R.id.spinnerNamaKaryawan);
 
@@ -96,6 +102,8 @@ public class CreateAssignActivity extends AppCompatActivity {
         status();
         jarak();
         absensi();
+        urgensi();
+        prioritas();
 
         getDataKaryawan();
 
@@ -132,7 +140,9 @@ public class CreateAssignActivity extends AppCompatActivity {
                         jarak != null &&
                         jabatan != null &&
                         status != null &&
-                        absensi != null) {
+                        absensi != null &&
+                        urgensi != null &&
+                        prioritas != null) {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -150,6 +160,8 @@ public class CreateAssignActivity extends AppCompatActivity {
                             agen.setMeeting(agenda);
                             agen.setStatus(status);
                             agen.setAbsensi(absensi);
+                            agen.setUrgensi(urgensi);
+                            agen.setPrioritas(prioritas);
                             agen.setKaryawan(true);
 
                             if (checkBox.isChecked()) {
@@ -172,6 +184,8 @@ public class CreateAssignActivity extends AppCompatActivity {
                             agendaModel.setMeeting(agenda);
                             agendaModel.setStatus(status);
                             agendaModel.setAbsensi(absensi);
+                            agendaModel.setUrgensi(urgensi);
+                            agendaModel.setPrioritas(prioritas);
                             agendaModel.setKaryawan(true);
 
                             addDataAgendaToFirestore(agendaModel);
@@ -445,6 +459,45 @@ public class CreateAssignActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void urgensi(){
+        String[] listUrgensi = new String[]{"Sangat Tinggi","Tinggi","Cukup Tinggi","Kurang Tinggi"};
+        ArrayAdapter<String> dataAdapterUrgensi = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listUrgensi);
+
+        dataAdapterUrgensi.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUrgensi.setAdapter(dataAdapterUrgensi);
+        spinnerUrgensi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                urgensi = listUrgensi[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void prioritas(){
+        String[] listPrioritas = new String[]{"Sangat Penting","Penting","Cukup Penting","Kurang Penting"};
+        ArrayAdapter<String> dataAdapterPrioritas = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listPrioritas);
+        dataAdapterPrioritas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPrioritas.setAdapter(dataAdapterPrioritas);
+        spinnerPrioritas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                prioritas = listPrioritas[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
 
     private void setSpinnerKaryawan(List<UserModel> userList) {
         List<String> namaKaryawanList = new ArrayList<>();

@@ -14,6 +14,25 @@ public class AgendaModel {
     private String hari = null;
     private String awal = null;
     private String akhir = null;
+    private String urgensi = null;
+    private String prioritas = null;
+
+    public String getUrgensi() {
+        return urgensi;
+    }
+
+    public void setUrgensi(String urgensi) {
+        this.urgensi = urgensi;
+    }
+
+    public String getPrioritas() {
+        return prioritas;
+    }
+
+    public void setPrioritas(String prioritas) {
+        this.prioritas = prioritas;
+    }
+
     private boolean isReminder = false;
     private Long time = 0L;
     private boolean isKaryawan = false;
@@ -62,7 +81,7 @@ public class AgendaModel {
 
     }
 
-    public AgendaModel(String name, String meeting, String jabatan, String status, String jarak, String absensi, String tanggal, String hari, String awal, String akhir, boolean isReminder, Long time, boolean isKaryawan) {
+    public AgendaModel(String name, String meeting, String jabatan, String status, String jarak, String absensi, String tanggal, String hari, String awal, String akhir, boolean isReminder, Long time, boolean isKaryawan, String urgensi, String prioritas) {
         this.name = name;
         this.meeting = meeting;
         this.jabatan = jabatan;
@@ -76,6 +95,8 @@ public class AgendaModel {
         this.isReminder = isReminder;
         this.time = time;
         this.isKaryawan = isKaryawan;
+        this.urgensi = urgensi;
+        this.prioritas = prioritas;
     }
 
     public String getId() {

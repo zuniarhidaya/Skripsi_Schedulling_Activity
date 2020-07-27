@@ -264,6 +264,8 @@ public class DssFragment extends Fragment {
 //                                agenda.setAwal(document.getData().get("awal").toString());
 //                                agenda.setAkhir(document.getData().get("akhir").toString());
 //                                agenda.setTime(Long.valueOf(document.getData().get("time").toString()));
+//                                agenda.setUrgensi(document.getData().get("urgensi").toString());
+//                                agenda.setPrioritas(document.getData().get("prioritas").toString());
                                 agenda.setKaryawan(Boolean.parseBoolean(document.getData().get("karyawan").toString()));
                                 agenda.setReminder(Boolean.parseBoolean(document.getData().get("reminder").toString()));
                                 agendas.add(agenda);

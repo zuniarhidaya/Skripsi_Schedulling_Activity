@@ -34,6 +34,26 @@ public class AgendaTable {
     private Long time = 0L;
     @ColumnInfo(name = "karyawan")
     private boolean isKaryawan = false;
+    @ColumnInfo(name = "urgensi")
+    private String urgensi = null;
+    @ColumnInfo(name = "prioritas")
+    private  String prioritas = null;
+
+    public String getUrgensi() {
+        return urgensi;
+    }
+
+    public void setUrgensi(String urgensi) {
+        this.urgensi = urgensi;
+    }
+
+    public String getPrioritas() {
+        return prioritas;
+    }
+
+    public void setPrioritas(String prioritas) {
+        this.prioritas = prioritas;
+    }
 
     public Long getTime() {
         return time;
