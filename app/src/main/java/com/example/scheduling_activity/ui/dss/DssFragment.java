@@ -27,8 +27,6 @@ import com.example.scheduling_activity.topsis.Alternative;
 import com.example.scheduling_activity.topsis.Criteria;
 import com.example.scheduling_activity.topsis.Topsis;
 import com.example.scheduling_activity.topsis.TopsisIncompleteAlternativeDataException;
-import com.example.scheduling_activity.ui.database.AppExecutors;
-import com.example.scheduling_activity.ui.database.DatabaseHelper;
 import com.example.scheduling_activity.ui.database.agenda.AgendaTable;
 import com.example.scheduling_activity.ui.database.criteria.CriteriaTable;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -214,26 +212,25 @@ public class DssFragment extends Fragment {
                 masukTanggal.setText(tanggal2);
                 getDataAgenda(tanggal2);
 
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
-                        List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
-                        List<AgendaTable> agenda = db.agendaDao().filterDate(tanggal);
-
-                        label.addAll(list);
-                        agendas.addAll(agenda);
-
-                        for (int i = 0; i < agenda.size(); i++) {
-                            Log.e("Data Agenda", agenda.get(i).getName() + ", " + agenda.get(i).getAbsensi() + ", " + agenda.get(i).getMeeting());
-                        }
-
-                        getActivity().runOnUiThread(DssFragment.this::testMobile);
-
-                        onBackPressed();
-                    }
-                });
-
+//                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        DatabaseHelper db = DatabaseHelper.getInstance(getActivity());
+//                        List<CriteriaTable> list = db.criteriaDao().getCriteriaList();
+//                        List<AgendaTable> agenda = db.agendaDao().filterDate(tanggal);
+//
+//                        label.addAll(list);
+//                        agendas.addAll(agenda);
+//
+//                        for (int i = 0; i < agenda.size(); i++) {
+//                            Log.e("Data Agenda", agenda.get(i).getName() + ", " + agenda.get(i).getAbsensi() + ", " + agenda.get(i).getMeeting());
+//                        }
+//
+//                        getActivity().runOnUiThread(DssFragment.this::testMobile);
+//
+//                        onBackPressed();
+//                    }
+//                });
 
             }
         };

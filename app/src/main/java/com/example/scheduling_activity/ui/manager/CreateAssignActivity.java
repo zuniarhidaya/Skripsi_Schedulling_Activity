@@ -461,7 +461,7 @@ public class CreateAssignActivity extends AppCompatActivity {
     }
 
     private void urgensi(){
-        String[] listUrgensi = new String[]{"Sangat Tinggi","Tinggi","Cukup Tinggi","Kurang Tinggi"};
+        String[] listUrgensi = new String[]{"Sangat Penting","Penting","Cukup Penting","Kurang Penting"};
         ArrayAdapter<String> dataAdapterUrgensi = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listUrgensi);
 
         dataAdapterUrgensi.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -480,7 +480,7 @@ public class CreateAssignActivity extends AppCompatActivity {
     }
 
     private void prioritas(){
-        String[] listPrioritas = new String[]{"Sangat Penting","Penting","Cukup Penting","Kurang Penting"};
+        String[] listPrioritas = new String[]{"Sangat Tinggi","Tinggi","Cukup Tinggi","Kurang Tinggi"};
         ArrayAdapter<String> dataAdapterPrioritas = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listPrioritas);
         dataAdapterPrioritas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPrioritas.setAdapter(dataAdapterPrioritas);
